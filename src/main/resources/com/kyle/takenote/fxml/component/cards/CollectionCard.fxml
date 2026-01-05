@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--Notes: This view will be a collection object representing a folder that set on the 
+Collection Board View itself. This will get created to hold NoteBoardViews objects.-->
+
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+
+<StackPane xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.kyle.takenote.ui.controller.component.card.CollectionCardController"
+           onMouseClicked="#handleClick"
+           prefWidth="220" prefHeight="120"
+           style="-fx-background-color: #1f1f1f; -fx-background-radius: 14; -fx-padding: 14; -fx-cursor: hand;">
+    <VBox spacing="6">
+        <Label fx:id="nameLabel"
+               text="Collection Name"
+               style="-fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold;" />
+        <Label fx:id="metaLabel"
+               text="0 notes"
+               style="-fx-text-fill: #bbbbbb; -fx-font-size: 12;" />
+    </VBox>
+</StackPane>

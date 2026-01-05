@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--Notes: This view will show many collections (Folders/NoteBooks)
+the style of listing can be changed based on user choice -->
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+
+
+<StackPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.kyle.takenote.ui.controller.view.CollectionBoardController">
+    <BorderPane >
+        <center>
+            <ScrollPane fitToWidth="true" fitToHeight="true" pannable="true">
+                <FlowPane fx:id="collectionBoard"
+                          hgap="12" vgap="12"
+                          prefWrapLength="900"
+                          style="-fx-padding: 16;">
+                          <Label text="Collection Content Area" 
+                            style="-fx-font-size: 22px;"/>
+
+                          
+                </FlowPane>
+            </ScrollPane>
+        </center>
+        
+    </BorderPane>
+</StackPane>

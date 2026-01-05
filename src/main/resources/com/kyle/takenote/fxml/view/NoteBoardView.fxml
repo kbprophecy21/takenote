@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--Notes: This view will show the note board view. It will live inside one collection folder showing 
+many of the user saved notes. -->
+
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+
+<StackPane  xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.kyle.takenote.ui.controller.view.NoteBoardViewController">
+    <BorderPane>
+        <center>
+            <ScrollPane fitToWidth="true" fitToHeight="true" pannable="true">
+                <FlowPane fx:id="noteBoard"
+                          hgap="12" vgap="12"
+                          prefWrapLength="900"
+                          style="-fx-padding: 16;">
+                          <Label text="Note Board Content Area" 
+                            style="-fx-font-size: 22px;"/>
+
+                          
+                </FlowPane>
+            </ScrollPane>
+        </center>
+        
+    </BorderPane>
+</StackPane>

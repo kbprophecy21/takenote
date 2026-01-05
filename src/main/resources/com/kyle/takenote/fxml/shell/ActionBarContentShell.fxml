@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Notes:  Container layout for the bottom content inside MainShell.fxml.
+this will switch out different content controls here based on what the user has displayed in the content area. -->
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml"  
+fx:controller="com.kyle.takenote.ui.controller.component.ActionBarController" >
+    <!-- This is the placeholder where controls get swapped -->
+    <StackPane fx:id="controlHost" />
+</StackPane>

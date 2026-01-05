@@ -1,0 +1,7 @@
+/target
+/.mvn
+/.vscode
+/.idea
+*.iml
+*.log
+/projectnotes

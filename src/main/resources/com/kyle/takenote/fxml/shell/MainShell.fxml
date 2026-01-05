@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Notes:  the permanent layout (top / left/ center). -->
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<BorderPane  xmlns:fx="http://javafx.com/fxml" fx:controller="com.kyle.takenote.ui.controller.shell.MainShellController">
+
+    <top>
+        <!-- Header -->
+        <Label text="header" />
+    </top>
+    
+    <left>
+        <!-- Collection navigation placeholder -->
+        <VBox>
+            <Button text="Home" onAction="#handleShowHome" />
+            <Button text="Notes" onAction="#handleShowNote"/>
+            <Button text="Collections" onAction="#handleShowCollection" />
+        </VBox> 
+    </left>
+
+    <center>
+        <!-- Content Area that swaps views-->
+        <StackPane fx:id="contentArea"></StackPane>
+    </center>
+    
+    <!--Bottom control area that changes based on the content that inside the center content -->
+        <bottom>
+            <StackPane prefHeight="70" 
+                style="fx-padding: 10; -fx-border-color: #2b2b2b; -fx-border-width: 1 0 0 0;">
+                    <fx:include fx:id="actionBar"
+                        source="/com/kyle/takenote/fxml/shell/ActionBarContentShell.fxml"/>
+            </StackPane>
+        </bottom>
+
+</BorderPane> 
