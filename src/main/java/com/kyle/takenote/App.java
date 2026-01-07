@@ -2,6 +2,7 @@ package com.kyle.takenote;
 
 import java.io.IOException;
 
+import com.kyle.takenote.domain.model.Note;
 import com.kyle.takenote.domain.service.CollectionService;
 import com.kyle.takenote.domain.service.NoteService;
 import com.kyle.takenote.ui.controller.shell.MainShellController;
@@ -11,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
 
 public class App extends Application { // entry point of a javaFx application
 
@@ -43,12 +45,33 @@ public class App extends Application { // entry point of a javaFx application
         MainShellController controller = loader.getController();
         controller.setServices(cs, ns);
 
+        seedNote(cs, ns);
+
+
         Scene scene = new Scene(root, 1400, 800);
 
         stage.setTitle("TakeNote");
         stage.setScene(scene);
         stage.show();
     }
+
+
+
+
+  //-----------------Temporary methods(testing purposes)---------------//
+  /**
+   * TODO: Notes: Use this for giving the app working data for GUI.
+   */
+    private void seedNote(CollectionService cs, NoteService ns){
+        ns.addNote(cs.getDefaultCollection(), new Note("Grocery list", "apple, bread, fruit, tomatoes"));
+        ns.addNote(cs.getDefaultCollection(), new Note("List number 2", "some random stuff. working on the railroad"));
+        ns.addNote(cs.getDefaultCollection(), new Note("List number 3", "apple, bread, fruit, tomatoes"));
+        ns.addNote(cs.getDefaultCollection(), new Note("", "water, blue, apple Jelly"));
+        // ....seeding Note testing data(temporary)---
+        
+        System.out.println("Seed notes in default: " + cs.getDefaultCollection().getNotes().size());
+       
+    };
 
 
 

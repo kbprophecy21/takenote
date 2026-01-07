@@ -18,6 +18,7 @@ many of the user saved notes. -->
                           hgap="12" vgap="12"
                           prefWrapLength="900"
                           style="-fx-padding: 16;">
+                          
                           <Label text="Note Board Content Area" 
                             style="-fx-font-size: 22px;"/>
 

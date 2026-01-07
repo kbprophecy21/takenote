@@ -6,6 +6,7 @@ import java.util.UUID;
 import com.kyle.takenote.domain.model.Collection;
 
 
+
 /**
  * Notes: this class owns collections and their notes.
  * It will use CRUD operations on the Collection.java data.
@@ -23,6 +24,7 @@ public class CollectionService {
         this.listOfCollections = new ArrayList<>();
         this.defaultCollection = new Collection("default");
         listOfCollections.add(this.defaultCollection);
+
     }
 
 
@@ -77,6 +79,5 @@ public class CollectionService {
         }
         return false;
     }
-
 
 }
