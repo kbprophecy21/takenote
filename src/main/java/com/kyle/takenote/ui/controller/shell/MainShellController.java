@@ -1,6 +1,6 @@
 package com.kyle.takenote.ui.controller.shell;
 
-import java.util.logging.Logger;
+//import java.util.logging.Logger;
 
 import com.kyle.takenote.domain.service.CollectionService;
 import com.kyle.takenote.domain.service.NoteService;
@@ -16,7 +16,11 @@ public class MainShellController  {
 
 
     //---------Fields------------//
-    private static final Logger LOGGER = Logger.getLogger(MainShellController.class.getName());
+
+    /**
+     * TODO: Add logger logic behavior later.
+     */
+    //private static final Logger LOGGER = Logger.getLogger(MainShellController.class.getName());
 
     private CollectionService collectionService;
     private NoteService noteService;
@@ -35,9 +39,10 @@ public class MainShellController  {
     //--------------------- FXML Methods-----------------//
 
 
+
     @FXML
     private void initialize(){
-         
+         // TODO: add logic here. 
     }
  
     @FXML

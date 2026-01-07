@@ -1,9 +1,6 @@
 package com.kyle.takenote.ui.controller.component;
 
 import java.io.IOException;
-import java.util.logging.Logger;
-
-import com.kyle.takenote.ui.controller.shell.MainShellController;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,8 +11,12 @@ public class ActionBarController {
     
 
     //---------Fields--------//
-    private static final Logger LOGGER = Logger.getLogger(MainShellController.class.getName());
 
+    /**
+     * TODO: add logger for debugging purpose later in near future.
+     */
+    //private static final Logger LOGGER = Logger.getLogger(CollectionBoardViewController.class.getName());
+    
     //----FXML Fields----//
     @FXML
     private StackPane controlHost;

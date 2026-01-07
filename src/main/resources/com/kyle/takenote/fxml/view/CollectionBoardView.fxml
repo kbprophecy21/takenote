@@ -11,7 +11,7 @@ the style of listing can be changed based on user choice -->
 
 <StackPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.kyle.takenote.ui.controller.view.CollectionBoardController">
+            fx:controller="com.kyle.takenote.ui.controller.view.CollectionBoardViewController">
     <BorderPane >
         <center>
             <ScrollPane fitToWidth="true" fitToHeight="true" pannable="true">
@@ -19,6 +19,7 @@ the style of listing can be changed based on user choice -->
                           hgap="12" vgap="12"
                           prefWrapLength="900"
                           style="-fx-padding: 16;">
+
                           <Label text="Collection Content Area" 
                             style="-fx-font-size: 22px;"/>
 

@@ -1,7 +1,6 @@
 package com.kyle.takenote.ui.controller.view;
 
 import java.io.IOException;
-import java.util.logging.Logger;
 
 import com.kyle.takenote.domain.model.Collection;
 import com.kyle.takenote.domain.service.CollectionService;
@@ -18,10 +17,14 @@ import javafx.scene.layout.FlowPane;
  * Notes: this class controls the Collection Board View. 
  */
 
-public class CollectionBoardViewController
-    implements Navigator.SupportsNavigator, Navigator.SupportsServices {
+public class CollectionBoardViewController implements Navigator.SupportsNavigator, Navigator.SupportsServices {
     
-    private static final Logger LOGGER = Logger.getLogger(CollectionBoardViewController.class.getName());
+
+        /**
+         * TODO: add logger for debugging purpose later in near future.
+         */
+    //private static final Logger LOGGER = Logger.getLogger(CollectionBoardViewController.class.getName());
+    
 
     
     @FXML

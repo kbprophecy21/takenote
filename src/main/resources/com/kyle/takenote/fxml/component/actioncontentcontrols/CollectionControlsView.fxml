@@ -7,6 +7,7 @@
       xmlns:fx="http://javafx.com/fxml"
       spacing="10" 
       fx:controller="com.kyle.takenote.ui.controller.component.ActionBarController">
+    
     <Label text="Collection Control Action Bar Here"/>
 
     <Button text="+ New Note" onAction="#handleNewNote"/>
