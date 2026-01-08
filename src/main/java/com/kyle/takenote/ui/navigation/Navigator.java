@@ -49,6 +49,18 @@ public class Navigator {
         showControls(Routes.COLLECTION_CONTROLS);
     }
 
+    public void showNoteEditor(UUID collectionId, UUID noteId) {
+        Object controller = loadContent(Routes.NOTE_EDITOR_VIEW);
+        showControls(Routes.NOTE_EDITOR_CONTROLS);
+
+        if (controller instanceof  SupportsActiveNote n) {
+            n.setActiveNote(noteId);
+        }
+        if (controller instanceof SupportsActiveCollection c) {
+            c.setActiveCollectionId(collectionId);
+        }
+    }
+
     public void showNotesForCollection(UUID collectionId) {
         Object controller = loadContent(Routes.NOTE_BOARD_VIEW);
         showControls(Routes.NOTE_CONTROLS);
@@ -58,6 +70,8 @@ public class Navigator {
             c.setActiveCollectionId(collectionId);
         }
     }
+
+    
 
     // ------------------- FXML loading helpers ------------------- //
 
@@ -109,5 +123,9 @@ public class Navigator {
 
     public interface SupportsActiveCollection {
         void setActiveCollectionId(UUID id);
+    }
+
+    public interface SupportsActiveNote {
+        void setActiveNote(UUID noteId);
     }
 }

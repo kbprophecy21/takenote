@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--Notes: This view will be editor where the note taking it done also many features that the application
+offers to the user. -->
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+
+<StackPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.kyle.takenote.ui.controller.view.NoteEditorViewController">
+    <BorderPane >
+        <top>
+            <HBox spacing="10">
+                <Button fx:id="backBtn" text="back button" />
+                <TextField fx:id="titleField" promptText="Note Title"/>
+                <Button fx:id="saveBtn" text="Save button"/>
+            </HBox>
+        
+        </top>
+        <center>
+           <TextArea fx:id="bodyArea"/>
+            
+        </center>
+        
+        
+    </BorderPane>
+</StackPane>

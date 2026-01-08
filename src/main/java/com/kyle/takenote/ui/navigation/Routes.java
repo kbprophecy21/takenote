@@ -19,7 +19,10 @@ public final class Routes {
     public static final String COLLECTION_BOARD_VIEW =
             "/com/kyle/takenote/fxml/view/CollectionBoardView.fxml";
 
+    public static final String NOTE_EDITOR_VIEW =
+            "/com/kyle/takenote/fxml/view/NoteEditorView.fxml";
 
+          
             
     // Bottom action bar controls (whatever folder you use)
     public static final String HOME_CONTROLS =
@@ -30,6 +33,9 @@ public final class Routes {
 
     public static final String COLLECTION_CONTROLS =
             "/com/kyle/takenote/fxml/component/actioncontentcontrols/CollectionControlsView.fxml";
+            
+    public static final String NOTE_EDITOR_CONTROLS = 
+            "/com/kyle/takenote/fxml/component/actioncontentcontrols/NoteEditorControlsView.fxml";
 }
 
 
