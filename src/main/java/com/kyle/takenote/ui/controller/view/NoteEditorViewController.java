@@ -48,7 +48,7 @@ public class NoteEditorViewController
     //------------Methods----------------//
 
     @Override
-    pubilc void setServices(CollectionService cs, NoteService ns) {
+    public void setServices(CollectionService cs, NoteService ns) {
         this.collectionService = cs;
         this.noteService = ns;
         tryLoad();
