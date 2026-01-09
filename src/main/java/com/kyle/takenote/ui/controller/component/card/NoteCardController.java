@@ -22,10 +22,15 @@ public class NoteCardController {
     //-------Fields--------//
     private Navigator navigator;
     private UUID noteId;
+    private UUID collectionId;
 
 
     public void setNavigator(Navigator navigator){
         this.navigator = navigator;
+    }
+
+    public void setActiveCollectionId(UUID id) {
+        this.collectionId = id;
     }
 
 
@@ -52,17 +57,26 @@ public class NoteCardController {
     }
     
     
-    /*
-     * TODO: fix this later. Need a route inside Navigator.java.
+    /**
+     * TODO: Needs to be updated!
      * This will handle the click part to open up the Note editor for the user.
-    /* 
+     */
     @FXML
-    private void handleNoteClick(MouseEvent e) {
-        if (navigator != null && noteId != null) {
-            navigator.showNotesForCollection(noteId);
+    private void handleNoteCardClick() {
+        if (navigator == null) {
+            System.out.println("Navigator is null");
+            return;
         }
+        if (collectionId == null || noteId == null) {
+            System.out.println("Missing IDs");
+            return;
+        }
+
+        navigator.showNoteEditor(collectionId, noteId);
     }
-    */
+
+  
+    
 
 
 

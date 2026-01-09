@@ -20,7 +20,8 @@ import javafx.scene.layout.FlowPane;
 
 
 
-public class NoteBoardViewController implements Navigator.SupportsServices, Navigator.SupportsActiveCollection {
+public class NoteBoardViewController 
+    implements Navigator.SupportsNavigator, Navigator.SupportsServices, Navigator.SupportsActiveCollection {
 
 
     //------Fields---------//
@@ -48,11 +49,14 @@ public class NoteBoardViewController implements Navigator.SupportsServices, Navi
    /**
     * TODO: have refresh() safeGuard null checks for navigator, services, activeCollectionId.
     */
+   
+    @Override
     public void setNavigator(Navigator navigator) {
         this.navigator = navigator;
         refresh();
     }
 
+    @Override
     public void setServices(CollectionService cs, NoteService ns){
         this.collectionService = cs;
         this.noteService = ns;
@@ -92,7 +96,12 @@ public class NoteBoardViewController implements Navigator.SupportsServices, Navi
         noteController.setNavigator(navigator);
         noteController.setData(n.getId(), n.getTitle(), n.getBody());
 
+        noteController.setActiveCollectionId(activeCollectionId);
+        
         noteBoard.getChildren().add(cardRoot);
+
+        System.out.println("NoteBoard navigator = " + navigator); // TESTING:
+
       }
       catch (IOException e){
         throw new RuntimeException("Failed to load NoteCard.fxml", e);

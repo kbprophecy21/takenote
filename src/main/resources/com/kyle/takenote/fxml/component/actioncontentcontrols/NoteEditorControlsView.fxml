@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      spacing="10" 
+      fx:controller="com.kyle.takenote.ui.controller.component.ActionBarController">
+
+    <Label text="Note Editor Control Action Bar Here"/>
+
+    
+</HBox>

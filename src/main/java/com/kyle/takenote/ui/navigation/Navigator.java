@@ -103,12 +103,13 @@ public class Navigator {
     private void injectCommon(Object controller) {
         if (controller == null) return;
 
-        if (controller instanceof SupportsNavigator c) {
-            c.setNavigator(this);
-        }
         if (controller instanceof SupportsServices c) {
             c.setServices(collectionService, noteService);
         }
+        if (controller instanceof SupportsNavigator c) {
+            c.setNavigator(this);
+        }
+        
     }
 
     // ------------------- Tiny “contracts” controllers can implement ------------------- //

@@ -5,6 +5,8 @@ offers to the user. -->
 
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.canvas.Canvas?>
+
 
 
 <StackPane xmlns="http://javafx.com/javafx"
@@ -13,14 +15,25 @@ offers to the user. -->
     <BorderPane >
         <top>
             <HBox spacing="10">
-                <Button fx:id="backBtn" text="back button" />
+                <Button fx:id="backBtn" onAction="#onBack" text="back button" />
                 <TextField fx:id="titleField" promptText="Note Title"/>
-                <Button fx:id="saveBtn" text="Save button"/>
+                <Button fx:id="saveBtn" onAction="#onSave" text="Save button"/>
             </HBox>
         
         </top>
         <center>
-           <TextArea fx:id="bodyArea"/>
+           <StackPane fx:id="editorStack" prefWidth="800" prefHeight="600">
+
+            <!-- Text layer (bottom) -->
+            <TextArea fx:id="noteTextArea"
+                      wrapText="true"
+                      promptText="Start typing..."
+                      />
+
+            <!-- Ink layer (top, transparent) -->
+            <Canvas fx:id="inkCanvas" />
+
+        </StackPane>
             
         </center>
         

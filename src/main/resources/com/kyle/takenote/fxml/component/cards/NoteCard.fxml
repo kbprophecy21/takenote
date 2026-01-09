@@ -11,7 +11,7 @@ this Card is clickable allowing it open the Note body editor so the user can tak
 
 <StackPane xmlns:fx="http://javafx.com/fxml"
            fx:controller="com.kyle.takenote.ui.controller.component.card.NoteCardController"
-           
+           onMouseClicked="#handleNoteCardClick"
            prefWidth="220" prefHeight="120"
            style="-fx-background-color: #1f1f1f; -fx-background-radius: 14; -fx-padding: 14; -fx-cursor: hand;">
     <VBox spacing="6">
