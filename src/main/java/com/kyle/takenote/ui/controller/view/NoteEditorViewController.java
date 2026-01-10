@@ -48,6 +48,7 @@ public class NoteEditorViewController
     @FXML private Button saveBtn;
     @FXML private Button backBtn;
     
+    
 
     //----------FXML Methods--------------//
 
@@ -110,26 +111,21 @@ public class NoteEditorViewController
     @FXML
      private void onSave() {
         if (activeNote == null) return;
-        Note note = activeNote;
+        
+        String uiTitle = titleField.getText();
+        String uiBody = noteTextArea.getText();
 
-        if (note.getTitle() == null || note.getTitle().isBlank()){
+        // check for title being empty or null here. use Untitled.
+        if (uiTitle == null || uiTitle.isBlank()) {
             activeNote.setTitle("Untitled");
+        } else {
+            activeNote.setTitle(uiTitle);
         }
         
-        
-        //activeNote.setBody(noteTextArea.getText());
+        activeNote.setBody(uiBody == null ? "": uiBody); // Learning a new way to write if statements. lol
 
         noteService.saveToDisk();
 
-        // If your NoteService has an update method, call it.
-        // If not, Option A simplest is: you're editing the same Note object in the collection list,
-        // so it's already "saved" in memory.
-        // Later persist to JSON/file/db.
-
-        // Example if you add it:
-        // noteService.updateNote(activeCollectionId, activeNote);
-
-        // Optional: navigate back after save
         onBack();
     }
 

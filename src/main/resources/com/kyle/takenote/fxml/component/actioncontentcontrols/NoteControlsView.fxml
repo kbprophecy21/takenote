@@ -6,9 +6,10 @@
 <HBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       spacing="10" 
-      fx:controller="com.kyle.takenote.ui.controller.component.ActionBarController">
+      fx:controller="com.kyle.takenote.ui.controller.component.actionbarcontroller.NoteActionBarController">
 
     <Label text="Notes Control Action Bar Here"/>
 
     <Button text="+ New Note" onAction="#handleNewNote"/>
+    <Button text="- Delete Note" onAction="#handleDeleteNote"/>
 </HBox>

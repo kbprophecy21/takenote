@@ -33,6 +33,7 @@ public class NoteBoardViewController
 
     
     private UUID activeCollectionId;
+    private UUID selectedNoteId;
 
     private CollectionService collectionService;
     private NoteService noteService;

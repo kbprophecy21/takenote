@@ -28,10 +28,9 @@
     
     <!--Bottom control area that changes based on the content that inside the center content -->
         <bottom>
-            <StackPane prefHeight="70" 
+            <StackPane prefHeight="70" fx:id="controlHost"
                 style="fx-padding: 10; -fx-border-color: #2b2b2b; -fx-border-width: 1 0 0 0;">
-                    <fx:include fx:id="actionBar"
-                        source="/com/kyle/takenote/fxml/shell/ActionBarContentShell.fxml"/>
+                    
             </StackPane>
         </bottom>
 

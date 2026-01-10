@@ -28,10 +28,11 @@ offers to the user. -->
             <TextArea fx:id="noteTextArea"
                       wrapText="true"
                       promptText="Start typing..."
+                      editable="true"
                       />
 
             <!-- Ink layer (top, transparent) -->
-            <Canvas fx:id="inkCanvas" />
+            <Canvas fx:id="inkCanvas" mouseTransparent="true" />
 
         </StackPane>
             

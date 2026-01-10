@@ -31,8 +31,9 @@ public class MainShellController  {
     @FXML
     private StackPane contentArea;
 
-    @FXML
-    private com.kyle.takenote.ui.controller.component.ActionBarController actionBarController; 
+    @FXML private StackPane controlHost;
+
+   
 
     
 
@@ -42,7 +43,8 @@ public class MainShellController  {
 
     @FXML
     private void initialize(){
-         // TODO: add logic here. 
+         // TODO: add logic here.
+        
     }
  
     @FXML
@@ -61,7 +63,7 @@ public class MainShellController  {
         this.collectionService = cs;
         this.noteService = ns;
 
-        this.navigator = new Navigator(contentArea, actionBarController, cs, ns);
+        this.navigator = new Navigator(contentArea, controlHost, cs, ns);
         navigator.showHome(); // for my default screen
     }
 

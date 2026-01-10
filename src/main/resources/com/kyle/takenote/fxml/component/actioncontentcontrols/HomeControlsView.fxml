@@ -6,7 +6,7 @@
 <HBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       spacing="10" 
-      fx:controller="com.kyle.takenote.ui.controller.component.ActionBarController">
+      fx:controller="com.kyle.takenote.ui.controller.component.actionbarcontroller.HomeActionBarController">
     
     <Label text="Home Control Action Bar Here"/>
 

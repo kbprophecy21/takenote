@@ -82,6 +82,18 @@ public class NoteService {
         }
         return collectionNotes;
     }
+
+    public boolean deleteNote(UUID id){
+        
+        for (int i = 0; i < listOfNotes.size(); i++) {
+            Note note = listOfNotes.get(i);
+            if (note.getId().equals(id)) {
+                listOfNotes.remove(i);
+                return true;
+            }
+        }
+        return false;
+    }
    
 
 

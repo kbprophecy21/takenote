@@ -1,11 +1,13 @@
 package com.kyle.takenote.ui.controller.component.card;
 
+//-------Java Imports------//
 import java.util.UUID;
 
 import com.kyle.takenote.ui.navigation.Navigator;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 
 
 /**
@@ -26,6 +28,7 @@ public class NoteCardController
     private UUID collectionId;
 
 
+    //---------------Methods--------------------//
     @Override
     public void setNavigator(Navigator navigator){
         this.navigator = navigator;
@@ -59,13 +62,18 @@ public class NoteCardController
         titleLabel.setText(name);
     }
     
+
+    //----------------FXML Methods----------------------//
     
     /**
      * TODO: Needs to be updated!
      * This will handle the click part to open up the Note editor for the user.
      */
     @FXML
-    private void handleNoteCardClick() {
+    private void handleNoteCardClick(MouseEvent event) {
+
+        System.out.println("CLICK noteId= " + noteId + "Count= " + event.getClickCount()); // TEST
+
         if (navigator == null) {
             System.out.println("Navigator is null");
             return;
@@ -75,7 +83,16 @@ public class NoteCardController
             return;
         }
 
-        navigator.showNoteEditor(collectionId, noteId);
+        if (event.getClickCount() == 1) {
+            System.out.println("CLICK noteId= " + noteId + "Count= " + event.getClickCount()); // TEST
+            navigator.setSelectedNoteId(noteId);
+        }
+        if (event.getClickCount() == 2) {
+            System.out.println("CLICK noteId= " + noteId + "Count= " + event.getClickCount()); // TEST
+            navigator.showNoteEditor(collectionId, noteId);
+        }
+        System.out.println("CLICK noteId= " + noteId + "Count= " + event.getClickCount()); // TEST
+        
     }
 
   

@@ -20,7 +20,21 @@ public class FileStorage {
 
 
     public FileStorage() {
-        this.baseDir = Paths.get("data"); // dev-simple local folder
+        this.baseDir = Paths.get(
+            System.getProperty("user.dir"),
+            "src",
+                    "main",
+                    "java",
+                    "com",
+                    "kyle",
+                    "takenote",
+                    "infrastructure",
+                    "persistence",
+                    "json",
+                    "data"
+            ); // dev-simple local folder
+        System.out.println("BaseDir = " + baseDir.toAbsolutePath());
+        
     }
 
 
@@ -43,7 +57,7 @@ public class FileStorage {
             if (!Files.exists(baseDir)) {
                 Files.createDirectories(baseDir);
             }
-            Path path = resolve(filename);
+            Path path = resolve(filename).toAbsolutePath();
             Files.writeString(
                     path,
                     content,

@@ -1,4 +1,4 @@
-package com.kyle.takenote.ui.controller.component;
+package com.kyle.takenote.ui.controller.component.actionbarcontroller;
 
 //----------Java Imports---------//
 import java.io.IOException;
@@ -19,8 +19,8 @@ import javafx.scene.layout.StackPane;
  * Notes: this class is controller for bottom part of the application. 
  * 
  */
-public class ActionBarController 
-    implements Navigator.SupportsNavigator, Navigator.SupportsServices, Navigator.SupportsActiveCollection {
+public class CollectionActionBarController 
+    implements Navigator.SupportsNavigator, Navigator.SupportsServices, Navigator.SupportsActiveCollection, Navigator.SupportsSelectedNote {
     
 
     //---------Fields--------//
@@ -29,6 +29,7 @@ public class ActionBarController
     private Navigator navigator;
 
     private UUID activeCollectionId;
+    private UUID selectedNoteId;
 
     /**
      * TODO: add logger for debugging purpose later in near future.
@@ -57,6 +58,14 @@ public class ActionBarController
         this.activeCollectionId = id;
     }
 
+    @Override
+    public void setSelectedNoteId(UUID id) {
+        System.out.println("Selection setter controller instance = " + this);
+
+        this.selectedNoteId = id;
+        System.out.println("ActionBarController.selectedNoteId=" + id); // TEST
+    }
+
     private void requireInjected() {
         if (navigator == null || collectionService == null || noteService == null) {
             throw new IllegalStateException("ActionBarController not injected (services/navigator).");
@@ -71,10 +80,8 @@ public class ActionBarController
 
     @FXML
     private void handleNewNote(){
-  
-        if (noteService == null || collectionService == null || navigator == null) {
-            throw new IllegalStateException("ActionBarController not injected (services/navigator).");
-        }
+        
+        requireInjected();
 
         UUID targetCollectionId = (activeCollectionId != null)
                 ? activeCollectionId
@@ -91,6 +98,28 @@ public class ActionBarController
     @FXML
     private void handleNewCollection(){
         //TODO: Add logic here for creating new Collection.
+    }
+
+
+    @FXML
+    private void handleDeleteNote(){
+        
+        System.out.println("Delete handler controller instance = " + this);
+
+        System.out.println("Delete clicked. selectedNoteId=" + selectedNoteId); // TEST
+       requireInjected();
+
+       if (selectedNoteId == null) return;
+
+       if (noteService.deleteNote(selectedNoteId)) {
+        noteService.saveToDisk();
+
+       }
+
+       navigator.showNotesForCollection(activeCollectionId);
+       navigator.setSelectedNoteId(null);
+
+
     }
 
    
