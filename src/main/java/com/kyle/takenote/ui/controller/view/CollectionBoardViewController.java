@@ -1,5 +1,6 @@
 package com.kyle.takenote.ui.controller.view;
 
+//--------Java Imports---------//
 import java.io.IOException;
 
 import com.kyle.takenote.domain.model.Collection;
@@ -17,23 +18,26 @@ import javafx.scene.layout.FlowPane;
  * Notes: this class controls the Collection Board View. 
  */
 
-public class CollectionBoardViewController implements Navigator.SupportsNavigator, Navigator.SupportsServices {
+public class CollectionBoardViewController 
+    implements Navigator.SupportsNavigator, Navigator.SupportsServices {
     
-
+    //--------Fields--------//
         /**
          * TODO: add logger for debugging purpose later in near future.
          */
     //private static final Logger LOGGER = Logger.getLogger(CollectionBoardViewController.class.getName());
     
-
-    
-    @FXML
-    private FlowPane collectionBoard;
-
     private Navigator navigator;
     private CollectionService collectionService;
     private NoteService noteService;
+    
+    //---------FXML Fields----------//
+    @FXML
+    private FlowPane collectionBoard;
 
+    
+
+    //------------Methods---------------//
     @Override
     public void setNavigator(Navigator navigator) {
         this.navigator = navigator;
@@ -49,7 +53,7 @@ public class CollectionBoardViewController implements Navigator.SupportsNavigato
 
    
 
-    private void addCollectionCard(Collection c) {
+    private void addCollectionCard(Collection c, NoteService ns) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(
                     "/com/kyle/takenote/fxml/component/cards/CollectionCard.fxml"
@@ -59,7 +63,7 @@ public class CollectionBoardViewController implements Navigator.SupportsNavigato
             CollectionCardController cardController = loader.getController();
 
             cardController.setNavigator(navigator);
-            cardController.setData(c.getId(), c.getName(), c.getNotes().size());
+            cardController.setData(c.getId(), c.getName(), ns.getNotesForCollection(c.getId()).size());
 
            collectionBoard.getChildren().add(cardRoot);
 
@@ -79,9 +83,10 @@ public class CollectionBoardViewController implements Navigator.SupportsNavigato
 
         collectionBoard.getChildren().clear();
 
-        // For now: show only default collection card
-        Collection def = collectionService.getDefaultCollection();
-
-        addCollectionCard(def);
+        
+        for (Collection collect : collectionService.getAllCollections()) {
+            addCollectionCard(collect, noteService);
+            
+        }
     }
 }

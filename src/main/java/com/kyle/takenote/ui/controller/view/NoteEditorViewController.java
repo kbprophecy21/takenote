@@ -1,6 +1,6 @@
 package com.kyle.takenote.ui.controller.view;
 
-
+//-----Java Imports----//
 import java.util.UUID;
 
 import com.kyle.takenote.domain.model.Collection;
@@ -16,11 +16,16 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 
+
+/**
+ * Note: This class is my Editor view controller. 
+ */
 public class NoteEditorViewController 
     implements Navigator.SupportsNavigator, Navigator.SupportsServices, Navigator.SupportsActiveCollection, Navigator.SupportsActiveNote {
     
 
 
+    //-----------Fields--------------//
     Navigator navigator;
 
     CollectionService collectionService;
@@ -54,7 +59,7 @@ public class NoteEditorViewController
         inkCanvas.heightProperty().bind(editorStack.heightProperty());
     }
 
-    //------------Methods----------------//
+    //--------------Methods----------------//
 
     @Override
     public void setServices(CollectionService cs, NoteService ns) {
@@ -88,7 +93,7 @@ public class NoteEditorViewController
         Collection c = collectionService.getCollectionById(activeCollectionId);
         if (c == null) return;
         
-        activeNote = c.getNotes().stream().filter(n -> n.getId().equals(activeNoteId)).findFirst().orElse(null);
+        activeNote = noteService.getNotesForCollection(activeCollectionId).stream().filter(n -> n.getId().equals(activeNoteId)).findFirst().orElse(null);
 
         if (activeNote == null) return;
 
@@ -105,14 +110,21 @@ public class NoteEditorViewController
     @FXML
      private void onSave() {
         if (activeNote == null) return;
+        Note note = activeNote;
 
-        activeNote.setTitle(titleField.getText());
-        activeNote.setBody(noteTextArea.getText());
+        if (note.getTitle() == null || note.getTitle().isBlank()){
+            activeNote.setTitle("Untitled");
+        }
+        
+        
+        //activeNote.setBody(noteTextArea.getText());
+
+        noteService.saveToDisk();
 
         // If your NoteService has an update method, call it.
         // If not, Option A simplest is: you're editing the same Note object in the collection list,
         // so it's already "saved" in memory.
-        // Later you'll persist to JSON/file/db.
+        // Later persist to JSON/file/db.
 
         // Example if you add it:
         // noteService.updateNote(activeCollectionId, activeNote);

@@ -1,9 +1,12 @@
 package com.kyle.takenote.domain.service;
 
+//-------Java Imports-------//
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import com.kyle.takenote.domain.model.Collection;
+import com.kyle.takenote.infrastructure.persistence.json.JsonCollectionRepository;
 
 
 
@@ -14,18 +17,29 @@ import com.kyle.takenote.domain.model.Collection;
  */
 public class CollectionService {
 
-    ArrayList<Collection> listOfCollections;
-    Collection defaultCollection;
+    //--------Fields----------//
+    private ArrayList<Collection> listOfCollections;
+    private Collection defaultCollection;
+    private JsonCollectionRepository repo;
+
+    
+    private static final UUID DEFAULT_COLLECTION_ID = UUID.fromString("00000000-0000-0000-0000-000000000001");
 
 
 
+    //----------Constuctor-------------//
     public CollectionService() {
 
         this.listOfCollections = new ArrayList<>();
-        this.defaultCollection = new Collection("default");
-        listOfCollections.add(this.defaultCollection);
+        ensureDefaultCollectionExists();
 
     }
+
+
+
+    //-----------Getters & Setters---------//
+
+    public UUID getDefaultCollectionId(){return DEFAULT_COLLECTION_ID;}
 
 
 
@@ -78,6 +92,34 @@ public class CollectionService {
             } 
         }
         return false;
+    }
+
+    public void loadFromDisk(){
+        List<Collection> loaded = repo.loadAll();
+
+        this.listOfCollections = new ArrayList<>(loaded);
+        if (loaded != null) {
+            this.listOfCollections.addAll(loaded);
+        }
+        ensureDefaultCollectionExists();
+    }
+
+    public void saveToDisk(){
+        repo.saveAll(listOfCollections);
+    }
+
+
+    //-----------Helper Methods------------//
+    
+    private void ensureDefaultCollectionExists(){
+        for (Collection c : this.listOfCollections) {
+            if (getDefaultCollectionId().equals(c.getId())){
+                defaultCollection = c;
+                return;
+            }
+        }
+        this.defaultCollection = new Collection(getDefaultCollectionId(), "default");
+        listOfCollections.add(0, this.defaultCollection);
     }
 
 }

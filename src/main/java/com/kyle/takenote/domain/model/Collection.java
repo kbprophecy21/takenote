@@ -1,7 +1,8 @@
 package com.kyle.takenote.domain.model;
 
+
+//------Java Imports-----------//
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.UUID;
 
 
@@ -11,21 +12,28 @@ import java.util.UUID;
  */
 public class Collection {
 
+    //------Fields-------//
     final UUID id;
     String name;
-    ArrayList<Note> noteList;
     LocalDateTime updatedAt;
     LocalDateTime createdAt;
 
 
-    public Collection(String name ){
+    //-----------Constructors------------------//
+    public Collection(String name ){ // for creating all over collections that is not default.
 
         this.id = (UUID.randomUUID());
         this.name = name;
-        this.noteList = new ArrayList<>();
         this.updatedAt = LocalDateTime.now();
         this.createdAt = LocalDateTime.now();
         
+    }
+
+    public Collection(UUID id, String name) { // For fixing the default collection
+        this.id = id;
+        this.name = name;
+        this.updatedAt = LocalDateTime.now();
+        this.createdAt = LocalDateTime.now();
     }
 
 
@@ -37,21 +45,11 @@ public class Collection {
     public LocalDateTime getCreatedAt(){return this.createdAt;};
 
     public String getName(){return this.name;};
+    
     public void setName(String name){
         this.name = name;
         touch();
     };
-
-    public ArrayList<Note> getNotes(){
-        return new ArrayList<>(this.noteList);
-    };
-
-
-    public void addNote(Note note){
-        this.noteList.add(note);
-        touch();
-    }
-
 
 
 

@@ -12,7 +12,8 @@ import javafx.scene.control.Label;
  * Notes: Reuseable component controller (?optional).
  * 
  */
-public class NoteCardController {
+public class NoteCardController 
+    implements Navigator.SupportsNavigator, Navigator.SupportsActiveCollection {
     
 
     //----FXML Fields----------//
@@ -25,10 +26,12 @@ public class NoteCardController {
     private UUID collectionId;
 
 
+    @Override
     public void setNavigator(Navigator navigator){
         this.navigator = navigator;
     }
 
+    @Override
     public void setActiveCollectionId(UUID id) {
         this.collectionId = id;
     }

@@ -1,6 +1,6 @@
 package com.kyle.takenote.ui.controller.view;
 
-//---Java imports-----//
+//------Java imports------//
 import java.io.IOException;
 import java.util.UUID;
 
@@ -73,10 +73,11 @@ public class NoteBoardViewController
         if (noteBoard == null) throw new NullPointerException("\"noteBoard\" cannot be null (FXML injection didn't happen).");
         if (collectionService == null) throw new NullPointerException("\"collectionService\" cannot be null (Navigator did't inject services).");
         if (activeCollectionId == null) throw new NullPointerException("\"activeCollectionId\" cannot be null (No collection selected yet).");
+        
         Collection activeCollection = collectionService.getCollectionById(activeCollectionId);
         if (activeCollection == null) throw new NullPointerException("\"activeCollection\" cannot be null.");
         noteBoard.getChildren().clear();
-        for (Note note : activeCollection.getNotes()) {
+        for (Note note : noteService.getNotesForCollection(activeCollectionId)) {
             addNoteCard(note);
         }
     }

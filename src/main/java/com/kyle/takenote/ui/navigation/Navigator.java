@@ -97,6 +97,9 @@ public class Navigator {
             LOGGER.severe("ActionBarController is null. Check fx:include wiring.");
             return;
         }
+
+        injectCommon(actionBarController); // injects itself.
+
         actionBarController.showControls(fxmlPath);
     }
 

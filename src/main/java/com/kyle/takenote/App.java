@@ -1,10 +1,12 @@
 package com.kyle.takenote;
 
+//-------Java Imports----------//
 import java.io.IOException;
 
-import com.kyle.takenote.domain.model.Note;
 import com.kyle.takenote.domain.service.CollectionService;
 import com.kyle.takenote.domain.service.NoteService;
+import com.kyle.takenote.infrastructure.persistence.json.JsonNoteRepository;
+import com.kyle.takenote.infrastructure.storage.FileStorage;
 import com.kyle.takenote.ui.controller.shell.MainShellController;
 
 import javafx.application.Application;
@@ -14,6 +16,9 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 
+/**
+ * Notes: Main application area. 
+ */
 public class App extends Application { // entry point of a javaFx application
 
 
@@ -37,15 +42,19 @@ public class App extends Application { // entry point of a javaFx application
 //---------------Helper Methods--------------------//
 
     private void loadMainShell(Stage stage) throws IOException{
+
+        FileStorage storage = new FileStorage();
+        JsonNoteRepository noteRepo = new JsonNoteRepository(storage);
+
         CollectionService cs = new CollectionService();
-        NoteService ns = new NoteService(cs);
+        NoteService ns = new NoteService(cs, noteRepo);
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/kyle/takenote/fxml/shell/MainShell.fxml"));
         Parent root = loader.load();
         MainShellController controller = loader.getController();
         controller.setServices(cs, ns);
 
-        seedNote(cs, ns);
+        
 
 
         Scene scene = new Scene(root, 1400, 800);
@@ -58,20 +67,7 @@ public class App extends Application { // entry point of a javaFx application
 
 
 
-  //-----------------Temporary methods(testing purposes)---------------//
-  /**
-   * TODO: Notes: Use this for giving the app working data for GUI.
-   */
-    private void seedNote(CollectionService cs, NoteService ns){
-        ns.addNote(cs.getDefaultCollection(), new Note("Grocery list", "apple, bread, fruit, tomatoes"));
-        ns.addNote(cs.getDefaultCollection(), new Note("List number 2", "some random stuff. working on the railroad"));
-        ns.addNote(cs.getDefaultCollection(), new Note("List number 3", "apple, bread, fruit, tomatoes"));
-        ns.addNote(cs.getDefaultCollection(), new Note("", "water, blue, apple Jelly"));
-        // ....seeding Note testing data(temporary)---
-        
-        System.out.println("Seed notes in default: " + cs.getDefaultCollection().getNotes().size());
-       
-    };
+  
 
 
 
