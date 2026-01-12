@@ -54,6 +54,7 @@ public class App extends Application { // entry point of a javaFx application
         MainShellController controller = loader.getController();
         controller.setServices(cs, ns);
 
+        ns.loadFromDisk();
         
 
 

@@ -59,10 +59,7 @@ public class NoteEditorActionBarController
 
     @Override
     public void setSelectedNoteId(UUID id) {
-        System.out.println("Selection setter controller instance = " + this); // TEST
-
         this.selectedNoteId = id;
-        System.out.println("ActionBarController.selectedNoteId=" + id); // TEST
     }
 
     private void requireInjected() {

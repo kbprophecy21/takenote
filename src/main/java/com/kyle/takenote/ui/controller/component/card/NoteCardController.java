@@ -72,7 +72,6 @@ public class NoteCardController
     @FXML
     private void handleNoteCardClick(MouseEvent event) {
 
-        System.out.println("CLICK noteId= " + noteId + "Count= " + event.getClickCount()); // TEST
 
         if (navigator == null) {
             System.out.println("Navigator is null");
@@ -84,14 +83,14 @@ public class NoteCardController
         }
 
         if (event.getClickCount() == 1) {
-            System.out.println("CLICK noteId= " + noteId + "Count= " + event.getClickCount()); // TEST
+            
             navigator.setSelectedNoteId(noteId);
         }
         if (event.getClickCount() == 2) {
-            System.out.println("CLICK noteId= " + noteId + "Count= " + event.getClickCount()); // TEST
+            
             navigator.showNoteEditor(collectionId, noteId);
         }
-        System.out.println("CLICK noteId= " + noteId + "Count= " + event.getClickCount()); // TEST
+        
         
     }
 

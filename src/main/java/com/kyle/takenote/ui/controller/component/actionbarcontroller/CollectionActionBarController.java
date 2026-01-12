@@ -63,7 +63,7 @@ public class CollectionActionBarController
         System.out.println("Selection setter controller instance = " + this);
 
         this.selectedNoteId = id;
-        System.out.println("ActionBarController.selectedNoteId=" + id); // TEST
+        
     }
 
     private void requireInjected() {
@@ -104,9 +104,6 @@ public class CollectionActionBarController
     @FXML
     private void handleDeleteNote(){
         
-        System.out.println("Delete handler controller instance = " + this);
-
-        System.out.println("Delete clicked. selectedNoteId=" + selectedNoteId); // TEST
        requireInjected();
 
        if (selectedNoteId == null) return;

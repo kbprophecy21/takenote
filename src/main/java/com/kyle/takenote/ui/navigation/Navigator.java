@@ -48,14 +48,13 @@ public class Navigator {
     public UUID getSelectedNoteId() {return selectedNoteId;}
 
    public void setSelectedNoteId(UUID id) {
-    System.out.println("Navigator.setSelectedNoteId(" + id + ")"); // TEST
     this.selectedNoteId = id;
 
     if (controlsController instanceof SupportsSelectedNote s) {
-        System.out.println("Forwarding selectedNoteId to current controls controller"); // TEST
+        
         s.setSelectedNoteId(id);
     } else {
-        System.out.println("Current controls controller does NOT support selected note"); // TEST
+        
     }
 }
 
@@ -90,6 +89,10 @@ public class Navigator {
 
         // If NoteBoard controller supports receiving the collectionId, pass it
         if (controller instanceof SupportsActiveCollection c) {
+            c.setActiveCollectionId(collectionId);
+        }
+
+        if (controlsController instanceof  SupportsActiveCollection c) {
             c.setActiveCollectionId(collectionId);
         }
     }

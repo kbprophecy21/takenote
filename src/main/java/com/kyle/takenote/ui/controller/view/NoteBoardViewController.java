@@ -102,7 +102,6 @@ public class NoteBoardViewController
         
         noteBoard.getChildren().add(cardRoot);
 
-        System.out.println("NoteBoard navigator = " + navigator); // TEST
 
       }
       catch (IOException e){

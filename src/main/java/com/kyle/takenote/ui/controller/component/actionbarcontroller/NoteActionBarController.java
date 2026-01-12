@@ -60,10 +60,7 @@ public class NoteActionBarController
 
     @Override
     public void setSelectedNoteId(UUID id) {
-        System.out.println("Selection setter controller instance = " + this);
-
         this.selectedNoteId = id;
-        System.out.println("ActionBarController.selectedNoteId=" + id); // TEST
     }
 
     private void requireInjected() {
@@ -103,22 +100,18 @@ public class NoteActionBarController
 
     @FXML
     private void handleDeleteNote(){
-        
-        System.out.println("Delete handler controller instance = " + this);
-
-        System.out.println("Delete clicked. selectedNoteId=" + selectedNoteId); // TEST
        requireInjected();
+        UUID targetCollectionId = (activeCollectionId != null)
+                ? activeCollectionId
+                : collectionService.getDefaultCollectionId();
 
        if (selectedNoteId == null) return;
 
        if (noteService.deleteNote(selectedNoteId)) {
         noteService.saveToDisk();
-
        }
-
-       navigator.showNotesForCollection(activeCollectionId);
+       navigator.showNotesForCollection(targetCollectionId);
        navigator.setSelectedNoteId(null);
-
 
     }
 
