@@ -14,12 +14,16 @@ import com.kyle.takenote.ui.navigation.Navigator;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.FlowPane;
 
 
 
 
-
+/**
+ * Note: This class is responsible for handle the controller logic of my NoteBoardView.fxml. 
+ */
 public class NoteBoardViewController 
     implements Navigator.SupportsNavigator, Navigator.SupportsServices, Navigator.SupportsActiveCollection {
 
@@ -41,7 +45,8 @@ public class NoteBoardViewController
 
 
     //---FXML Fields-------//
-   @FXML FlowPane noteBoard;
+   @FXML private FlowPane noteBoard;
+   @FXML private Label collectionNameLabel;
 
     
 
@@ -66,8 +71,20 @@ public class NoteBoardViewController
    @Override
    public void setActiveCollectionId(UUID id) {
         this.activeCollectionId = id;
+        requireInjected();
+        
+        if (collectionNameLabel != null) {
+            collectionNameLabel.setText(collectionService.getCollectionById(activeCollectionId).getName());
+        }
+        
         renderNotesForActiveCollection();
     };
+
+    private void requireInjected() {
+        if (navigator == null || collectionService == null || noteService == null) {
+            throw new IllegalStateException("NoteBoardViewController not injected (services/navigator).");
+        }
+    }
 
 
     private void renderNotesForActiveCollection() {
@@ -110,6 +127,32 @@ public class NoteBoardViewController
     }
 
 
+    //---------------FXML Methods----------------------//
+
+    @FXML
+    private void handleRenameCollection() {
+        requireInjected();
+
+        var collection = collectionService.getCollectionById(activeCollectionId);
+        if (collection == null) return;
+
+        TextInputDialog dialog = new TextInputDialog(collection.getName());
+        dialog.setTitle("Rename Collection");
+        dialog.setHeaderText(null);
+        dialog.setContentText("New Name: ");
+
+        dialog.showAndWait().ifPresent(input -> {
+            String newName = input.trim();
+            if (newName.isBlank()) return;
+
+            collectionService.renameCollection(activeCollectionId, newName);
+            collectionService.saveToDisk();
+
+            collectionNameLabel.setText(newName);
+        });
+    }
+
+
 
    
 
@@ -117,8 +160,9 @@ public class NoteBoardViewController
     //----------Helper Methods----------//
 
     private void refresh() {
-        noteBoard.getChildren().clear();
-    
 
+        if (noteBoard != null) {
+            noteBoard.getChildren().clear();
+        }
     }
 }

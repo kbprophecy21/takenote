@@ -28,8 +28,9 @@ public class CollectionService {
 
 
     //----------Constuctor-------------//
-    public CollectionService() {
+    public CollectionService(JsonCollectionRepository repository) {
 
+        this.repo = repository;
         this.listOfCollections = new ArrayList<>();
         ensureDefaultCollectionExists();
 
@@ -72,7 +73,7 @@ public class CollectionService {
     public boolean renameCollection(UUID id, String newName){
         for (Collection c: listOfCollections){
             if (c.getId().equals(id)){
-                c.setName(newName);
+                c.rename(newName);
                 return true;
             }
         }

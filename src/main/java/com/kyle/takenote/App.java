@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import com.kyle.takenote.domain.service.CollectionService;
 import com.kyle.takenote.domain.service.NoteService;
+import com.kyle.takenote.infrastructure.persistence.json.JsonCollectionRepository;
 import com.kyle.takenote.infrastructure.persistence.json.JsonNoteRepository;
 import com.kyle.takenote.infrastructure.storage.FileStorage;
 import com.kyle.takenote.ui.controller.shell.MainShellController;
@@ -45,8 +46,9 @@ public class App extends Application { // entry point of a javaFx application
 
         FileStorage storage = new FileStorage();
         JsonNoteRepository noteRepo = new JsonNoteRepository(storage);
+        JsonCollectionRepository collectRepo = new JsonCollectionRepository(storage);
 
-        CollectionService cs = new CollectionService();
+        CollectionService cs = new CollectionService(collectRepo);
         NoteService ns = new NoteService(cs, noteRepo);
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/kyle/takenote/fxml/shell/MainShell.fxml"));
@@ -55,12 +57,11 @@ public class App extends Application { // entry point of a javaFx application
         controller.setServices(cs, ns);
 
         ns.loadFromDisk();
+        cs.loadFromDisk();
         
 
-
         Scene scene = new Scene(root, 1400, 800);
-
-        stage.setTitle("TakeNote");
+        stage.setTitle("TakeNotes");
         stage.setScene(scene);
         stage.show();
     }

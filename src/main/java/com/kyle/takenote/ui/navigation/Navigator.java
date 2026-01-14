@@ -26,6 +26,7 @@ public class Navigator {
 
     private Object controlsController; // current active controls controller.
     private UUID selectedNoteId;
+    private UUID selectedCollectionId;
 
     private final CollectionService collectionService;
     private final NoteService noteService;
@@ -47,17 +48,24 @@ public class Navigator {
 
     public UUID getSelectedNoteId() {return selectedNoteId;}
 
+    public UUID getSelectedCollectionId() {return selectedCollectionId;}
+
    public void setSelectedNoteId(UUID id) {
-    this.selectedNoteId = id;
+        this.selectedNoteId = id;
 
-    if (controlsController instanceof SupportsSelectedNote s) {
-        
-        s.setSelectedNoteId(id);
-    } else {
-        
+        if (controlsController instanceof SupportsSelectedNote s) {
+            
+            s.setSelectedNoteId(id);
+        } 
     }
-}
 
+    public void setSelectedCollectionId(UUID id) {
+        this.selectedCollectionId = id;
+
+        if (controlsController instanceof  SupportsSelectedCollection s) {
+            s.setSelectedCollectionId(id);
+        }
+    }
 
     // ------------------- Public navigation API Methods ------------------- //
 
@@ -172,5 +180,9 @@ public class Navigator {
 
     public interface SupportsSelectedNote {
         void setSelectedNoteId(UUID id);
+    }
+
+    public interface SupportsSelectedCollection {
+        void setSelectedCollectionId(UUID id);
     }
 }

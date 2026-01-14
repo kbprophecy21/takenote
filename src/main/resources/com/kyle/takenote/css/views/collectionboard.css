@@ -1,0 +1,48 @@
+/* FULL SCREEN blue board */
+.cb-root {
+    -fx-padding: 22;
+
+    -fx-background-color: linear-gradient(to bottom, #2f6fb6, #2b63a3);
+    
+
+    -fx-effect: innershadow(gaussian, rgba(0,0,0,0.25), 18, 0.40, 0, 2);
+
+    -fx-border-color: rgba(0,0,0,0.12);
+    -fx-border-width: 1;
+    
+}
+
+/* ScrollPane transparent so the board shows */
+.cb-scroll {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-border-color: transparent;
+}
+
+.cb-scroll > .viewport {
+    -fx-background-color: transparent;
+}
+
+.cb-scroll .corner {
+    -fx-background-color: transparent;
+}
+
+/* Content padding inside board */
+.cb-content {
+    -fx-padding: 10;
+}
+
+/* Title on blue */
+.cb-title {
+    -fx-font-size: 22px;
+    -fx-font-weight: 800;
+    -fx-text-fill: rgba(255,255,255,0.95);
+    -fx-padding: 2 0 10 2;
+}
+
+/* Grid just lays out cards */
+.cb-grid {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}

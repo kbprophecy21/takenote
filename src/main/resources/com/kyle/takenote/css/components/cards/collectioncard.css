@@ -1,0 +1,85 @@
+/* Clickable surface (handles hover lift/shadow) */
+.collection-card {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-cursor: hand;
+
+    /*IMPORTANT: add space above each card so tabs don't collide. */
+    -fx-margin: 18 0 0 0;
+}
+
+/* The folder itself */
+.folder-body {
+
+    /* makes the corners round except the Top left corner.*/
+    -fx-background-radius: 0 14 14 14;
+    -fx-border-radius: 0 14 14 14;
+
+    -fx-background-color: #f6e7a6;
+    -fx-border-color: rgba(0,0,0,0.12);
+    -fx-border-width: 1;
+
+    /* more top padding so text sits below the tab */
+    -fx-padding: 34 16 16 16;
+
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 12, 0.30, 0, 4);
+}
+
+/* Tab itself */
+.folder-tab {
+    -fx-min-width: 92;
+    -fx-pref-width: 92;
+    -fx-max-width: 92;
+
+    -fx-min-height: 30;
+    -fx-pref-height: 30;
+    -fx-max-height: 30;
+
+    -fx-background-color: #f3dc87;
+
+    /* top corners rounded, bottom corners square */
+    -fx-background-radius: 10 10 0 0;
+    -fx-border-radius: 10 10 0 0;
+
+    -fx-border-color: rgba(0,0,0,0.10);
+    -fx-border-width: 1;
+
+    /* sit near top-left, slightly overlapping the body edge */
+    -fx-translate-x: 0;
+    -fx-translate-y: -18;
+}
+
+/* Content spacing */
+.collection-card-content {
+    -fx-spacing: 6;
+}
+
+/* Text */
+.collection-card-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: 800;
+    -fx-text-fill: #2b2b2b;
+}
+
+.collection-card-meta {
+    -fx-font-size: 12px;
+    -fx-text-fill: rgba(0,0,0,0.55);
+}
+
+/* Hover: match your note-card behavior (lift + stronger shadow) */
+.collection-card:hover .folder-body {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.33), 18, 0.38, 0, 6);
+}
+
+.collection-card:hover {
+    -fx-translate-y: -2;
+}
+
+/* Pressed: reduce lift */
+.collection-card:pressed {
+    -fx-translate-y: 0;
+}
+
+.collection-card:pressed .folder-body {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.22), 10, 0.25, 0, 3);
+}

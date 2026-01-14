@@ -4,6 +4,7 @@ package com.kyle.takenote.ui.controller.component.actionbarcontroller;
 import java.io.IOException;
 import java.util.UUID;
 
+import com.kyle.takenote.domain.model.Collection;
 import com.kyle.takenote.domain.model.Note;
 import com.kyle.takenote.domain.service.CollectionService;
 import com.kyle.takenote.domain.service.NoteService;
@@ -97,7 +98,14 @@ public class CollectionActionBarController
 
     @FXML
     private void handleNewCollection(){
-        //TODO: Add logic here for creating new Collection.
+
+        //TODO: Update later for better UI/UX design.
+        
+        requireInjected();
+
+        Collection created = collectionService.createCollection("Untitled Name");
+        collectionService.saveToDisk();
+        navigator.showCollections();
     }
 
 

@@ -6,26 +6,45 @@ many of the user saved notes. -->
 
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
+<?import java.net.URL?>
 
 
 <StackPane  xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.kyle.takenote.ui.controller.view.NoteBoardViewController">
+            <stylesheets>
+                <URL value="@../../css/views/noteboard.css"/>
+            </stylesheets>
     <BorderPane>
         <center>
-            <ScrollPane fitToWidth="true" fitToHeight="true" pannable="true">
-                <FlowPane fx:id="noteBoard"
-                          hgap="12" vgap="12"
-                          prefWrapLength="900"
-                          style="-fx-padding: 16;">
-                          
-                          <Label text="Note Board Content Area" 
-                            style="-fx-font-size: 22px;"/>
+            <VBox spacing="10" styleClass="note-board-root">
+                
+                <!-- Header -->
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label fx:id="collectionNameLabel"
+                        text="default"
+                        styleClass="collection-header"
+                        onMouseClicked="#handleRenameCollection"/>
+                </HBox>
 
-                          
-                </FlowPane>
-            </ScrollPane>
-        </center>
-        
+                <!-- Notes (scrollable) -->
+                <StackPane styleClass="board-surface" VBox.vgrow="ALWAYS">
+
+                    <ScrollPane fitToWidth="true"
+                                pannable="true"
+                                styleClass="note-scroll">
+                        <content>
+                            <FlowPane fx:id="noteBoard"
+                            hgap="14" vgap="14"
+                            prefWrapLength="900"/>
+                        </content>
+                    </ScrollPane>
+
+                </StackPane>
+
+
+            </VBox>
+
+        </center> 
     </BorderPane>
 </StackPane>

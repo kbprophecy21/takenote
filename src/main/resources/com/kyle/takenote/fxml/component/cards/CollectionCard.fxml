@@ -1,24 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!--Notes: This view will be a collection object representing a folder that set on the 
-Collection Board View itself. This will get created to hold NoteBoardViews objects.-->
-
-
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
-
+<?import java.net.URL?>
 
 <StackPane xmlns:fx="http://javafx.com/fxml"
            fx:controller="com.kyle.takenote.ui.controller.component.card.CollectionCardController"
-           onMouseClicked="#handleClick"
-           prefWidth="220" prefHeight="120"
-           style="-fx-background-color: #1f1f1f; -fx-background-radius: 14; -fx-padding: 14; -fx-cursor: hand;">
-    <VBox spacing="6">
-        <Label fx:id="nameLabel"
-               text="Collection Name"
-               style="-fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold;" />
-        <Label fx:id="metaLabel"
-               text="0 notes"
-               style="-fx-text-fill: #bbbbbb; -fx-font-size: 12;" />
-    </VBox>
+           onMouseClicked="#handleCollectionCardClick"
+           fx:id="root"
+           prefWidth="240" prefHeight="140"
+           styleClass="collection-card">
+
+    <stylesheets>
+        <URL value="@../../../css/components/cards/collectioncard.css" />
+    </stylesheets>
+
+    <!-- IMPORTANT: wrapper layer so we can control front/back -->
+    <StackPane styleClass="folder-wrap">
+
+        <!-- 1) TAB first = rendered BEHIND; I did this because Javafx css doesn't support z index format. so i had this render the nodes in different order. --> 
+        <Region styleClass="folder-tab"
+                StackPane.alignment="TOP_LEFT"/>
+
+        <!-- 2) BODY second = rendered IN FRONT (covers tab bottom) -->
+        <StackPane styleClass="folder-body">
+
+            <VBox spacing="6" styleClass="collection-card-content">
+                <Label fx:id="nameLabel"
+                       text="Collection Name"
+                       styleClass="collection-card-title" />
+
+                <Label fx:id="metaLabel"
+                       text="0 notes"
+                       styleClass="collection-card-meta" />
+            </VBox>
+
+        </StackPane>
+
+    </StackPane>
 </StackPane>

@@ -117,12 +117,12 @@ public class NoteEditorViewController
 
         // check for title being empty or null here. use Untitled.
         if (uiTitle == null || uiTitle.isBlank()) {
-            activeNote.setTitle("Untitled");
+            activeNote.rename("Untitled");
         } else {
-            activeNote.setTitle(uiTitle);
+            activeNote.rename(uiTitle);
         }
         
-        activeNote.setBody(uiBody == null ? "": uiBody); // Learning a new way to write if statements. lol
+        activeNote.updateBody(uiBody == null ? "": uiBody); // Learning a new way to write if statements. lol
 
         noteService.saveToDisk();
 

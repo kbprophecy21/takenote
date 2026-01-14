@@ -1,0 +1,51 @@
+/* ===== Whiteboard surface ===== */
+
+
+
+.note-board-root {
+    -fx-background-color: #f4f4f4;
+    -fx-background-radius: 14;
+    -fx-border-radius: 14;
+
+    -fx-border-color: #cfcfcf;
+    -fx-border-width: 2;
+
+    -fx-padding: 18;
+}
+
+.board-surface {
+    -fx-background-color:
+        linear-gradient(to bottom, #2f6fb6, #2b63a3);
+
+    -fx-background-radius: 10;
+    -fx-padding: 16;
+
+    /* subtle inset shadow so it feels recessed */
+    -fx-effect: innershadow(gaussian, rgba(0,0,0,0.25), 18, 0.4, 0, 2);
+}
+
+
+
+
+/* Header style */
+.collection-header {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2b2b2b;
+    -fx-cursor: hand;
+
+    /* a little breathing room so notes feel like they're below it */
+    -fx-padding: 2 0 8 2;
+}
+
+/* Make ScrollPane transparent so board shows through */
+.note-scroll {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+/* JavaFX ScrollPane is weird: the inner “viewport” has its own background */
+.note-scroll .viewport {
+    -fx-background-color: transparent;
+}

@@ -4,34 +4,60 @@
 
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 
 <BorderPane  xmlns:fx="http://javafx.com/fxml" fx:controller="com.kyle.takenote.ui.controller.shell.MainShellController">
 
-    <top>
-        <!-- Header -->
-        <Label text="header" />
-    </top>
-    
     <left>
-        <!-- Collection navigation placeholder -->
-        <VBox>
-            <Button text="Home" onAction="#handleShowHome" />
-            <Button text="Notes" onAction="#handleShowNote"/>
-            <Button text="Collections" onAction="#handleShowCollection" />
-        </VBox> 
+        <VBox prefWidth="250" spacing="12"
+            style="-fx-padding: 12; -fx-border-color: #2b2b2b; -fx-border-width: 0 1 0 0;">
+
+            <!-- Header -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ImageView fx:id="avatarImage" fitHeight="40" fitWidth="40" preserveRatio="true">
+                    <image>
+                        <Image url="@/com/kyle/takenote/images/testImage.jpg"/>
+                    </image>
+                </ImageView>
+
+                <VBox>
+                    <Label text="Kyle Brewer" style="-fx-font-weight: bold;"/>
+                    <Label text="kylebrewerkb1995@gmail.com" style="-fx-font-weight: bold;"/>
+                    <!-- optional small text -->
+                    <!-- <Label text="Signed in" style="-fx-font-size: 10; -fx-opacity: 0.7;"/> -->
+                </VBox>
+            </HBox>
+
+            <Separator/>
+
+            <!-- Menu buttons -->
+            <VBox spacing="8">
+                <Button text="Home" onAction="#handleShowHome" maxWidth="Infinity"/>
+                <Button text="Collections" onAction="#handleShowCollection" maxWidth="Infinity"/>
+            </VBox>
+
+            <!-- Spacer pushes stuff upward nicely -->
+            <Region VBox.vgrow="ALWAYS"/>
+        </VBox>
     </left>
 
+
     <center>
-        <!-- Content Area that swaps views-->
-        <StackPane fx:id="contentArea"></StackPane>
-    </center>
-    
-    <!--Bottom control area that changes based on the content that inside the center content -->
-        <bottom>
+
+        <VBox>
+            <!-- Content Area that swaps views-->
+            <StackPane fx:id="contentArea"   VBox.vgrow="ALWAYS" />
+            
+            
+            <!--Bottom control area that changes based on the content that inside the center content -->
             <StackPane prefHeight="70" fx:id="controlHost"
-                style="fx-padding: 10; -fx-border-color: #2b2b2b; -fx-border-width: 1 0 0 0;">
-                    
+                style="fx-padding: 10; 
+                -fx-border-color: #2b2b2b; 
+                -fx-border-width: 1 0 0 0;">
+                        
             </StackPane>
-        </bottom>
+        </VBox>
+    </center>
 
 </BorderPane> 

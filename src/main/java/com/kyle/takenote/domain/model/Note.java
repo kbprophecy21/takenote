@@ -49,14 +49,18 @@ public class Note {
     public void setCollectionId(UUID id) { this.collectionId = id; }
 
 
-    public void setTitle(String title){
+    public void rename(String title){
         this.title = title;
         touch();
     };
+
     public String getTitle(){return this.title;};
+    public void setTitle(String name){this.title = name;};
 
     public String getBody(){return this.body;}
-    public void setBody(String body){
+    public void setBody(String body) {this.body = body;};
+    
+    public void updateBody(String body){
         this.body = body;
         touch();
     };

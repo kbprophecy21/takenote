@@ -1,32 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!--Notes: This view will show many collections (Folders/NoteBooks)
-the style of listing can be changed based on user choice -->
-
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.image.*?>
-
+<?import java.net.URL?>
 
 <StackPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.kyle.takenote.ui.controller.view.CollectionBoardViewController">
-    <BorderPane >
-        <center>
-            <ScrollPane fitToWidth="true" fitToHeight="true" pannable="true">
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.kyle.takenote.ui.controller.view.CollectionBoardViewController"
+           styleClass="cb-root">
+
+    <stylesheets>
+        <URL value="@../../css/views/collectionboard.css" />
+    </stylesheets>
+
+    <!-- Everything sits directly on the board -->
+    <ScrollPane fitToWidth="true"
+                pannable="true"
+                styleClass="cb-scroll">
+
+        <content>
+            <VBox spacing="12" styleClass="cb-content">
+
+                <Label text="Collections"
+                       styleClass="cb-title"/>
+
                 <FlowPane fx:id="collectionBoard"
-                          hgap="12" vgap="12"
+                          hgap="18" vgap="28"
                           prefWrapLength="900"
-                          style="-fx-padding: 16;">
+                          styleClass="cb-grid"/>
 
-                          <Label text="Collection Content Area" 
-                            style="-fx-font-size: 22px;"/>
+            </VBox>
+        </content>
 
-                          
-                </FlowPane>
-            </ScrollPane>
-        </center>
-        
-    </BorderPane>
+    </ScrollPane>
 </StackPane>

@@ -7,22 +7,36 @@ this Card is clickable allowing it open the Note body editor so the user can tak
 
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
-
+<?import java.net.URL?>
 
 <StackPane xmlns:fx="http://javafx.com/fxml"
            fx:controller="com.kyle.takenote.ui.controller.component.card.NoteCardController"
            onMouseClicked="#handleNoteCardClick"
-           prefWidth="220" prefHeight="120"
-           style="-fx-background-color: #1f1f1f; -fx-background-radius: 14; -fx-padding: 14; -fx-cursor: hand;">
-    <VBox spacing="6">
+           prefWidth="220"
+           prefHeight="120"
+           styleClass="note-card">
+
+
+       <stylesheets>
+              <URL value="@../../../css/components/cards/notecard.css"/>
+       </stylesheets>
+
+
+    <VBox spacing="6" styleClass="note-card-content">
+
         <Label fx:id="titleLabel"
                text="Untitled"
-               style="-fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold;" />
+               styleClass="note-card-title"/>
+
         <Label fx:id="bodyLabel"
                text=""
-               style="-fx-text-fill: #bbbbbb; -fx-font-size: 12;" />
+               wrapText="true"
+               styleClass="note-card-body"/>
+
         <Label fx:id="updatedDateLabel"
                text=""
-               style="-fx-text-fill: #bbbbbb; -fx-font-size: 12;" />
+               styleClass="note-card-date"/>
+
     </VBox>
 </StackPane>
+

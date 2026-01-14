@@ -1,0 +1,35 @@
+.note-card {
+    -fx-background-color: #fff9b1;
+    -fx-background-radius: 10;
+    -fx-padding: 14;
+
+    /* shadow to lift it off the board */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 12, 0.3, 0, 4);
+
+    -fx-cursor: hand;
+}
+
+.note-card:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 18, 0.4, 0, 6);
+    -fx-translate-y: -2;
+}
+
+.note-card-content {
+    -fx-spacing: 6;
+}
+
+.note-card-title {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2e2e2e;
+}
+
+.note-card-body {
+    -fx-font-size: 12px;
+    -fx-text-fill: #4a4a4a;
+}
+
+.note-card-date {
+    -fx-font-size: 10px;
+    -fx-text-fill: #777777;
+}

@@ -7,18 +7,29 @@ import com.kyle.takenote.ui.navigation.Navigator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 
-public class CollectionCardController {
+public class CollectionCardController implements Navigator.SupportsNavigator, Navigator.SupportsSelectedCollection {
     
-    @FXML private Label nameLabel;
-    @FXML private Label metaLabel;
-
-
+    //------------Fields----------//
     private Navigator navigator;
     private UUID collectionId;
 
+    //----------FXML Fields--------------//
+    @FXML private Label nameLabel;
+    @FXML private Label metaLabel;
+    @FXML private StackPane root;
+
+
+    //------------------Methods--------------------------//
+    @Override
     public void setNavigator(Navigator navigator) {
         this.navigator = navigator;
+    }
+
+    @Override
+    public void setSelectedCollectionId(UUID id) {
+        this.collectionId = id;
     }
 
 
@@ -28,10 +39,41 @@ public class CollectionCardController {
         metaLabel.setText(noteCount + " notes");
     }
 
+    public void setSelected(boolean selected) {
+        if (selected) {
+            if (!root.getStyleClass().contains("selected")) root.getStyleClass().add("selected");
+        } else {
+            root.getStyleClass().remove("selected");
+        }
+    }
+
+    //---------------FXML Methods------------------//
+
     @FXML
-    private void handleClick(MouseEvent e) {
+    private void initialize() {
+        root.getStyleClass().add("collection-card");
+
+        root.setOnMouseEntered(e -> {
+            if (!root.getStyleClass().contains("hovered")) {
+                root.getStyleClass().add("hovered");
+            }
+        });
+
+        root.setOnMouseExited(e -> root.getStyleClass().remove("hovered"));
+    }
+
+
+    @FXML
+    private void handleCollectionCardClick(MouseEvent event) {
         if (navigator != null && collectionId != null) {
-            navigator.showNotesForCollection(collectionId);
+
+            if (event.getClickCount() == 1){
+               navigator.setSelectedCollectionId(collectionId);
+            }
+            if (event.getClickCount() == 2) {
+                navigator.showNotesForCollection(collectionId);
+            }
+            
         }
     }
 }
