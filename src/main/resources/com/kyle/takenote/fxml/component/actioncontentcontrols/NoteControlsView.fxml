@@ -2,14 +2,41 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import java.net.URL?>
 
-<HBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      spacing="10" 
-      fx:controller="com.kyle.takenote.ui.controller.component.actionbarcontroller.NoteActionBarController">
 
-    <Label text="Notes Control Action Bar Here"/>
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.kyle.takenote.ui.controller.component.actionbarcontroller.NoteActionBarController"
+           styleClass="cloud-wrap">
+    
+    <stylesheets>
+      <URL value="@../../../css/components/actioncontentbar/notecontrol.css"/>
+    </stylesheets>
 
-    <Button text="+ New Note" onAction="#handleNewNote"/>
-    <Button text="- Delete Note" onAction="#handleDeleteNote"/>
-</HBox>
+    <!-- Decorative pieces -->
+    <Region styleClass="cloud-top"/>
+    <Region styleClass="cloud-body"/>
+
+    <!-- Real controls -->
+    <HBox spacing="12" alignment="CENTER_LEFT" styleClass="cloud-content">
+        
+
+        <TextField promptText="Search Notes inside Collection..." prefWidth="300" styleClass="cloud-input"/>
+
+        <MenuButton text="Sort" styleClass="cloud-btn">
+            <MenuItem text="A → Z"/>
+            <MenuItem text="Z → A"/>
+            <MenuItem text="Recently Used"/>
+        </MenuButton>
+
+        <ToggleButton text="Grid" styleClass="cloud-toggle"/>
+
+        <Region HBox.hgrow="ALWAYS"/>
+
+        <Button text="+ New Note" onAction="#handleNewNote" styleClass="cloud-btn"/>
+        <Button text="- Delete Note" onAction="#handleDeleteNote" styleClass="cloud-btn"/>
+        <Button text="Manage" styleClass="cloud-btn-secondary"/>
+    </HBox>
+
+</StackPane>

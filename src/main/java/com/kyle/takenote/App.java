@@ -56,8 +56,9 @@ public class App extends Application { // entry point of a javaFx application
         MainShellController controller = loader.getController();
         controller.setServices(cs, ns);
 
-        ns.loadFromDisk();
         cs.loadFromDisk();
+        ns.loadFromDisk();
+        
         
 
         Scene scene = new Scene(root, 1400, 800);

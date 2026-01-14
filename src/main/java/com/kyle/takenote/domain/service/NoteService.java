@@ -83,6 +83,11 @@ public class NoteService {
         return collectionNotes;
     }
 
+    public List<Note> getAllNotes() {
+        return new ArrayList<>(listOfNotes);
+    }
+
+
     public boolean deleteNote(UUID id){
         
         for (int i = 0; i < listOfNotes.size(); i++) {
@@ -103,9 +108,19 @@ public class NoteService {
 
 
     private UUID resolveCollectionId(UUID collectionId) {
-        if (collectionId != null) return collectionId;
-        return collectService.getDefaultCollectionId();
+        return collectionId;
     }
+
+
+    public void ensureNoteHasCollection(Note note) {
+        if (note == null) return;
+
+        if (note.getCollectionId() == null) {
+            UUID defId = collectService.getOrCreateDefaultCollection().getId();
+            note.setCollectionId(defId);
+        }
+    }
+
 
 
     public void loadFromDisk() {
@@ -114,14 +129,19 @@ public class NoteService {
         this.listOfNotes = new ArrayList<>();
         if (loaded != null) this.listOfNotes.addAll(loaded);
 
-        // migration safety: any note missing collectionId goes to default
-        UUID defId = collectService.getDefaultCollectionId();
-        for (Note n : listOfNotes) {
-            if (n.getCollectionId() == null) {
-                n.setCollectionId(defId);
+        // Leave null collectionId as null.
+        // (Optional migration: if default exists already, then attach)
+        UUID defId = null;
+        var def = collectService.getDefaultCollectionIfExists();
+        if (def != null) defId = def.getId();
+
+        if (defId != null) {
+            for (Note n : listOfNotes) {
+                if (n.getCollectionId() == null) n.setCollectionId(defId);
             }
         }
     }
+
 
 
     public void saveToDisk(){

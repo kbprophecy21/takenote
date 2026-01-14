@@ -13,6 +13,7 @@ import com.kyle.takenote.ui.navigation.Navigator;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 
 
@@ -21,16 +22,17 @@ import javafx.scene.layout.StackPane;
  * 
  */
 public class CollectionActionBarController 
-    implements Navigator.SupportsNavigator, Navigator.SupportsServices, Navigator.SupportsActiveCollection, Navigator.SupportsSelectedNote {
+    implements Navigator.SupportsNavigator, Navigator.SupportsServices, Navigator.SupportsActiveCollection, Navigator.SupportsSelectedCollection{
     
 
     //---------Fields--------//
     private CollectionService collectionService;
     private NoteService noteService;
     private Navigator navigator;
-
     private UUID activeCollectionId;
-    private UUID selectedNoteId;
+    private UUID selectedCollectionId;
+
+    
 
     /**
      * TODO: add logger for debugging purpose later in near future.
@@ -38,9 +40,8 @@ public class CollectionActionBarController
     //private static final Logger LOGGER = Logger.getLogger(CollectionBoardViewController.class.getName());
     
     //----FXML Fields----//
-    @FXML
-    private StackPane controlHost;
-
+    @FXML private StackPane controlHost;
+    @FXML private Button deleteCollectionBtn;
     
     //---------Methods----------//
     @Override
@@ -60,12 +61,14 @@ public class CollectionActionBarController
     }
 
     @Override
-    public void setSelectedNoteId(UUID id) {
-        System.out.println("Selection setter controller instance = " + this);
+    public void setSelectedCollectionId(UUID id) {
+        this.selectedCollectionId = id;
 
-        this.selectedNoteId = id;
-        
+         // Enable button when collection folder is selected.
+         deleteCollectionBtn.setDisable(id == null);
     }
+
+   
 
     private void requireInjected() {
         if (navigator == null || collectionService == null || noteService == null) {
@@ -80,19 +83,30 @@ public class CollectionActionBarController
 
 
     @FXML
-    private void handleNewNote(){
-        
+    private void initialize() {
+        deleteCollectionBtn.setDisable(true);
+    }
+
+
+    @FXML
+    private void handleNewNote() {
+
         requireInjected();
 
-        UUID targetCollectionId = (activeCollectionId != null)
-                ? activeCollectionId
-                : collectionService.getDefaultCollectionId();
+        UUID targetCollectionId =
+                (activeCollectionId != null)
+                        ? activeCollectionId
+                        : collectionService.getOrCreateDefaultCollection().getId();
 
         Note created = noteService.createNote(targetCollectionId, "", "");
-        noteService.saveToDisk(); // optional: autosave after creation
+
+        collectionService.saveToDisk();
+        noteService.saveToDisk();
 
         navigator.showNoteEditor(targetCollectionId, created.getId());
     }
+
+
  
     
 
@@ -110,22 +124,37 @@ public class CollectionActionBarController
 
 
     @FXML
-    private void handleDeleteNote(){
-        
-       requireInjected();
+    private void handleDeleteCollection() {
+        requireInjected();
 
-       if (selectedNoteId == null) return;
+        if (selectedCollectionId == null) return;
 
-       if (noteService.deleteNote(selectedNoteId)) {
-        noteService.saveToDisk();
+        // Don’t allow deleting default (if it exists)
+        if (selectedCollectionId.equals(collectionService.getDefaultCollectionId())) {
+            return;
+        }
 
-       }
+        // Delete notes that belong to this collection (important!)
+        for (var note : new java.util.ArrayList<>(noteService.getNotesForCollection(selectedCollectionId))) {
+            noteService.deleteNote(note.getId());
+        }
 
-       navigator.showNotesForCollection(activeCollectionId);
-       navigator.setSelectedNoteId(null);
+        // Delete the collection itself
+        if (collectionService.deleteCollection(selectedCollectionId)) {
+            collectionService.saveToDisk();
+            noteService.saveToDisk();
+        }
 
+        // Clear selection + refresh board
+        selectedCollectionId = null;
+        navigator.setSelectedCollectionId(null);
 
+        navigator.showCollections();
+        selectedCollectionId = null;
+        deleteCollectionBtn.setDisable(true);
+        navigator.setSelectedCollectionId(null);
     }
+
 
    
 

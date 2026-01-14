@@ -3,7 +3,6 @@ package com.kyle.takenote.ui.controller.view;
 //-----Java Imports----//
 import java.util.UUID;
 
-import com.kyle.takenote.domain.model.Collection;
 import com.kyle.takenote.domain.model.Note;
 import com.kyle.takenote.domain.service.CollectionService;
 import com.kyle.takenote.domain.service.NoteService;
@@ -87,47 +86,75 @@ public class NoteEditorViewController
         tryLoad();
     }
 
+    private void requireInjected() {
+        if (collectionService == null || noteService == null) {
+            throw new IllegalStateException("NoteEditorViewController not injected (services/navigator).");
+        }
+    }
+
     //--------------Helper Methods-----------------//
     private void tryLoad() {
-        if (collectionService == null || noteService == null) return;
-        if (activeCollectionId == null || activeNoteId == null) return;
-        Collection c = collectionService.getCollectionById(activeCollectionId);
-        if (c == null) return;
-        
-        activeNote = noteService.getNotesForCollection(activeCollectionId).stream().filter(n -> n.getId().equals(activeNoteId)).findFirst().orElse(null);
+        requireInjected();
+
+        if (activeNoteId == null) return;
+
+        // If we have a collection, load from that collection list
+        if (activeCollectionId != null) {
+            activeNote = noteService.getNotesForCollection(activeCollectionId)
+                .stream().filter(n -> n.getId().equals(activeNoteId)).findFirst().orElse(null);
+        } else {
+            // No collection yet: search all notes for this noteId
+            activeNote = noteService.getAllNotes()
+                .stream().filter(n -> n.getId().equals(activeNoteId)).findFirst().orElse(null);
+        }
 
         if (activeNote == null) return;
 
-        // Fill UI
         titleField.setText(activeNote.getTitle());
         noteTextArea.setText(activeNote.getBody());
 
-    }
+
+        if (activeNote == null) return;
+
+            // Fill UI
+            titleField.setText(activeNote.getTitle());
+            noteTextArea.setText(activeNote.getBody());
+
+        }
 
 
     /**
      * TODO: Need to finish these
      */
     @FXML
-     private void onSave() {
-        if (activeNote == null) return;
+    private void onSave() {
         
+        if (activeNote == null) return;
+
         String uiTitle = titleField.getText();
         String uiBody = noteTextArea.getText();
 
-        // check for title being empty or null here. use Untitled.
         if (uiTitle == null || uiTitle.isBlank()) {
             activeNote.rename("Untitled");
         } else {
             activeNote.rename(uiTitle);
         }
-        
-        activeNote.updateBody(uiBody == null ? "": uiBody); // Learning a new way to write if statements. lol
 
+        activeNote.updateBody(uiBody == null ? "" : uiBody);
+
+        
+        noteService.ensureNoteHasCollection(activeNote);
+
+        
+        collectionService.saveToDisk();
         noteService.saveToDisk();
+
+        
+        this.activeCollectionId = activeNote.getCollectionId();
 
         onBack();
     }
+
 
     @FXML
     private void onBack() {

@@ -153,6 +153,14 @@ public class NoteBoardViewController
     }
 
 
+    @FXML
+    private void handleBackToCollectionBoard() {
+
+        requireInjected();
+        navigator.showCollections();
+    }
+
+
 
    
 

@@ -44,7 +44,7 @@ public class Collection {
     //-----------------Getters & Setters ---------------//
 
     public UUID getId(){return this.id;};
-    public void setID(UUID id){this.id = id;}; 
+    public void setId(UUID id){this.id = id;}; 
 
     public LocalDateTime getUpdatedAt(){return this.updatedAt;};
     public void setUpdatedAt(LocalDateTime upDateTime){this.updatedAt = upDateTime;};

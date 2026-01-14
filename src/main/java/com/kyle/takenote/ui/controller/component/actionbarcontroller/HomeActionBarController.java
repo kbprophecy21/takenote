@@ -72,20 +72,24 @@ public class HomeActionBarController
     //------------------FXML Methods-----------------//
 
 
-    @FXML
-    private void handleNewNote(){
-        
+   @FXML
+    private void handleNewNote() {
+
         requireInjected();
 
-        UUID targetCollectionId = (activeCollectionId != null)
-                ? activeCollectionId
-                : collectionService.getDefaultCollectionId();
+        UUID targetCollectionId =
+                (activeCollectionId != null)
+                        ? activeCollectionId
+                        : collectionService.getOrCreateDefaultCollection().getId();
 
         Note created = noteService.createNote(targetCollectionId, "", "");
-        noteService.saveToDisk(); // optional: autosave after creation
+
+        collectionService.saveToDisk();
+        noteService.saveToDisk();
 
         navigator.showNoteEditor(targetCollectionId, created.getId());
     }
+
  
     
 

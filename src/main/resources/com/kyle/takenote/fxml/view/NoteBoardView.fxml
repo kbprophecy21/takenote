@@ -1,50 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!--Notes: This view will show the note board view. It will live inside one collection folder showing 
-many of the user saved notes. -->
-
-
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 <?import java.net.URL?>
 
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.kyle.takenote.ui.controller.view.NoteBoardViewController"
+           styleClass="nb-root">
 
-<StackPane  xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.kyle.takenote.ui.controller.view.NoteBoardViewController">
-            <stylesheets>
-                <URL value="@../../css/views/noteboard.css"/>
-            </stylesheets>
-    <BorderPane>
-        <center>
-            <VBox spacing="10" styleClass="note-board-root">
-                
+    <stylesheets>
+        <URL value="@../../css/views/noteboard.css"/>
+    </stylesheets>
+
+    <ScrollPane fitToWidth="true"
+                pannable="true"
+                styleClass="nb-scroll">
+
+        <content>
+            <VBox spacing="12" styleClass="nb-content">
+
                 <!-- Header -->
                 <HBox alignment="CENTER_LEFT" spacing="10">
                     <Label fx:id="collectionNameLabel"
                         text="default"
-                        styleClass="collection-header"
+                        styleClass="nb-title"
                         onMouseClicked="#handleRenameCollection"/>
+
+                    <!-- Spacer pushes the button to the right -->
+                    <Region HBox.hgrow="ALWAYS"/>
+
+                    <Button text="Back"
+                            onAction="#handleBackToCollectionBoard"
+                            styleClass="nb-btn" />
                 </HBox>
 
-                <!-- Notes (scrollable) -->
-                <StackPane styleClass="board-surface" VBox.vgrow="ALWAYS">
 
-                    <ScrollPane fitToWidth="true"
-                                pannable="true"
-                                styleClass="note-scroll">
-                        <content>
-                            <FlowPane fx:id="noteBoard"
-                            hgap="14" vgap="14"
-                            prefWrapLength="900"/>
-                        </content>
-                    </ScrollPane>
-
-                </StackPane>
-
-
+                <!-- Notes grid -->
+                <FlowPane fx:id="noteBoard"
+                          hgap="14" vgap="22"
+                          prefWrapLength="900"
+                          styleClass="nb-grid"/>
             </VBox>
+        </content>
 
-        </center> 
-    </BorderPane>
+    </ScrollPane>
 </StackPane>
