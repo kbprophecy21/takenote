@@ -11,7 +11,10 @@ import com.kyle.takenote.ui.navigation.Navigator;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.FlowPane;
 
 /**
@@ -30,6 +33,9 @@ public class CollectionBoardViewController
     private Navigator navigator;
     private CollectionService collectionService;
     private NoteService noteService;
+
+    private Node draggedCard;
+    private int lastHoverIndex = -1;
     
     //---------FXML Fields----------//
     @FXML
@@ -70,6 +76,51 @@ public class CollectionBoardViewController
         } catch (IOException e) {
             throw new RuntimeException("Failed to load CollectionCard.fxml", e);
         }
+    }
+
+
+    private void handleDragReorder(Node card){
+
+        card.setOnDragDetected(e -> {
+            draggedCard = card;
+            lastHoverIndex = -1;
+
+            var db = card.startDragAndDrop(TransferMode.MOVE);
+
+            var content = new ClipboardContent();
+            content.putString("collection-card"); // marker only part kyle;
+            db.setContent(content);
+
+            e.consume();
+        });
+
+        card.setOnDragOver(e -> {
+            if (draggedCard == null) return;
+            if (draggedCard == card) return;
+            if (!e.getDragboard().hasString()) return;
+
+            e.acceptTransferModes(TransferMode.MOVE);
+
+            // live make room for the other collection cards.
+            int hoverIndex = collectionBoard.getChildren().indexOf(card);
+            if (hoverIndex != lastHoverIndex) {
+                collectionBoard.getChildren().remove(draggedCard);
+                collectionBoard.getChildren().add(hoverIndex, draggedCard);
+                lastHoverIndex = hoverIndex;
+            }
+            e.consume();
+        });
+
+            card.setOnDragDropped(e -> {
+            e.setDropCompleted(draggedCard != null);
+            e.consume();
+        });
+
+        card.setOnDragDone(e -> {
+            draggedCard = null;
+            lastHoverIndex = -1;
+            e.consume();
+        });
     }
 
    
