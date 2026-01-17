@@ -71,7 +71,8 @@ public class CollectionBoardViewController
             cardController.setNavigator(navigator);
             cardController.setData(c.getId(), c.getName(), ns.getNotesForCollection(c.getId()).size());
 
-           collectionBoard.getChildren().add(cardRoot);
+            handleDragReorder(cardRoot);
+            collectionBoard.getChildren().add(cardRoot);
 
         } catch (IOException e) {
             throw new RuntimeException("Failed to load CollectionCard.fxml", e);
@@ -91,6 +92,13 @@ public class CollectionBoardViewController
             content.putString("collection-card"); // marker only part kyle;
             db.setContent(content);
 
+            var img = card.snapshot(null, null);
+            db.setDragView(img);
+            db.setDragView(img, img.getWidth() / 2, img.getHeight() / 2);
+
+            card.setOpacity(0.4);
+            card.getStyleClass().add("dragging"); // TODO: add .dragging style class in my .css file in collectionboard.css 
+
             e.consume();
         });
 
@@ -108,6 +116,9 @@ public class CollectionBoardViewController
                 collectionBoard.getChildren().add(hoverIndex, draggedCard);
                 lastHoverIndex = hoverIndex;
             }
+
+            
+
             e.consume();
         });
 
@@ -119,6 +130,10 @@ public class CollectionBoardViewController
         card.setOnDragDone(e -> {
             draggedCard = null;
             lastHoverIndex = -1;
+
+            card.setOpacity(1.0);
+            card.getStyleClass().remove("dragging"); // TODO: add .dragging style class in my .css file in collectionboard.css 
+            
             e.consume();
         });
     }
