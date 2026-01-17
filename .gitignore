@@ -5,4 +5,8 @@
 *.iml
 *.log
 /projectnotes
-src/main/java/com/kyle/takenote/infrastructure/persistence/json/data/
+
+# Ignore local JSON persistence data
+/src/main/java/com/kyle/takenote/infrastructure/persistence/json/data/
+
+
