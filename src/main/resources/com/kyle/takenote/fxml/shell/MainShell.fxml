@@ -10,36 +10,7 @@
 <BorderPane  xmlns:fx="http://javafx.com/fxml" fx:controller="com.kyle.takenote.ui.controller.shell.MainShellController">
 
     <left>
-        <VBox prefWidth="250" spacing="12"
-            style="-fx-padding: 12; -fx-border-color: #2b2b2b; -fx-border-width: 0 1 0 0;">
-
-            <!-- Header -->
-            <HBox spacing="10" alignment="CENTER_LEFT">
-                <ImageView fx:id="avatarImage" fitHeight="40" fitWidth="40" preserveRatio="true">
-                    <image>
-                        <Image url="@/com/kyle/takenote/images/testImage.jpg"/>
-                    </image>
-                </ImageView>
-
-                <VBox>
-                    <Label text="Kyle Brewer" style="-fx-font-weight: bold;"/>
-                    <Label text="kylebrewerkb1995@gmail.com" style="-fx-font-weight: bold;"/>
-                    <!-- optional small text -->
-                    <!-- <Label text="Signed in" style="-fx-font-size: 10; -fx-opacity: 0.7;"/> -->
-                </VBox>
-            </HBox>
-
-            <Separator/>
-
-            <!-- Menu buttons -->
-            <VBox spacing="8">
-                <Button text="Home" onAction="#handleShowHome" maxWidth="Infinity"/>
-                <Button text="Collections" onAction="#handleShowCollection" maxWidth="Infinity"/>
-            </VBox>
-
-            <!-- Spacer pushes stuff upward nicely -->
-            <Region VBox.vgrow="ALWAYS"/>
-        </VBox>
+        <StackPane fx:id="sideMenuArea" />
     </left>
 
 

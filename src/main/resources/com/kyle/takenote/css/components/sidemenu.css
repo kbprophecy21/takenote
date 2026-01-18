@@ -1,0 +1,113 @@
+/* ---------- Side Menu Root (cloud panel) ---------- */
+.side-menu {
+    -fx-padding: 14;
+    -fx-spacing: 12;
+
+    /* Cloudy white panel like your controls */
+    -fx-background-color: rgba(255,255,255,0.90);
+    -fx-background-radius: 0;
+
+    -fx-border-color: rgba(0,0,0,0.08);
+    -fx-border-width: 1;
+    -fx-border-radius: 0;
+
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18), 18, 0.25, 0, 6);
+}
+
+/* Header “card” inside the cloud */
+.sm-header {
+    -fx-padding: 10;
+    -fx-spacing: 10;
+
+    -fx-background-color: rgba(0,0,0,0.03);
+    -fx-background-radius: 18;
+
+    -fx-border-color: rgba(0,0,0,0.06);
+    -fx-border-width: 1;
+    -fx-border-radius: 18;
+}
+
+/* Avatar polish */
+.sm-avatar {
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+
+    -fx-border-color: rgba(0,0,0,0.08);
+    -fx-border-width: 1;
+}
+
+/* Text styling (matches your “bold but soft” vibe) */
+.sm-name {
+    -fx-font-size: 14px;
+    -fx-font-weight: 800;
+    -fx-opacity: 0.90;
+}
+
+.sm-email {
+    -fx-font-size: 11px;
+    -fx-font-weight: 700;
+    -fx-opacity: 0.65;
+}
+
+/* Section title like your cloud-title but smaller */
+.sm-section-title {
+    -fx-font-size: 11px;
+    -fx-font-weight: 800;
+    -fx-opacity: 0.65;
+    -fx-padding: 2 0 2 2;
+}
+
+/* Separator */
+.sm-sep {
+    -fx-opacity: 0.25;
+}
+
+/* ---------- Buttons (match nb-btn / cloud-btn energy) ---------- */
+.sm-btn {
+    -fx-background-color: rgba(0,0,0,0.06);
+    -fx-background-radius: 18;
+
+    -fx-border-color: rgba(0,0,0,0.10);
+    -fx-border-width: 1;
+    -fx-border-radius: 18;
+
+    -fx-padding: 10 14 10 14;
+    -fx-font-weight: 800;
+
+    -fx-alignment: CENTER_LEFT;
+}
+
+/* Hover/press are basically your nb-btn but toned down */
+.sm-btn:hover {
+    -fx-background-color: rgba(0,0,0,0.10);
+    -fx-translate-y: -1;
+}
+
+.sm-btn:pressed {
+    -fx-background-color: rgba(0,0,0,0.05);
+    -fx-translate-y: 0;
+}
+
+/* Primary action: slightly brighter and “important” */
+.sm-btn-primary {
+    -fx-background-color: rgba(47, 111, 182, 0.14); /* matches your board blue */
+    -fx-border-color: rgba(47, 111, 182, 0.25);
+}
+
+.sm-btn-primary:hover {
+    -fx-background-color: rgba(47, 111, 182, 0.18);
+}
+
+/* Footer ghost buttons (lighter) */
+.sm-btn-ghost {
+    -fx-background-color: rgba(0,0,0,0.03);
+}
+
+.sm-btn-ghost:hover {
+    -fx-background-color: rgba(0,0,0,0.08);
+}
+
+/* Footer spacing */
+.sm-footer {
+    -fx-padding: 0 0 2 0;
+}

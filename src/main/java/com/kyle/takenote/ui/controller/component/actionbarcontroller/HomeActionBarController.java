@@ -72,6 +72,13 @@ public class HomeActionBarController
     //------------------FXML Methods-----------------//
 
 
+    
+    @FXML private void handleQuickAddTask() { /* TODO */ }
+    @FXML private void handleSearch() { /* TODO */ }
+    @FXML private void handleFocusToday() { /* TODO */ }
+    @FXML private void handleFocusRecent() { /* TODO */ }
+    @FXML private void handleRefreshHome() { /* TODO */ }
+
    @FXML
     private void handleNewNote() {
 

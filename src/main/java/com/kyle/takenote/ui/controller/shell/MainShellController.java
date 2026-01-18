@@ -28,8 +28,10 @@ public class MainShellController  {
     private Navigator navigator;
 
     //---------FXML Fields-----------//
-    @FXML
-    private StackPane contentArea;
+    
+    @FXML private StackPane sideMenuArea;
+
+    @FXML private StackPane contentArea;
 
     @FXML private StackPane controlHost;
 
@@ -43,15 +45,12 @@ public class MainShellController  {
 
     @FXML
     private void initialize(){
-         // TODO: add logic here.
+         // TODO: add logic here
         
     }
  
     @FXML
     private void handleShowHome() {navigator.showHome();}
- 
-    @FXML
-    private void handleShowNote() {navigator.showNotesForCollection(collectionService.getDefaultCollection().getId());}
 
     @FXML
     private void handleShowCollection() {navigator.showCollections();}
@@ -63,7 +62,8 @@ public class MainShellController  {
         this.collectionService = cs;
         this.noteService = ns;
 
-        this.navigator = new Navigator(contentArea, controlHost, cs, ns);
+        this.navigator = new Navigator(contentArea, controlHost, sideMenuArea, cs, ns);
+        navigator.showSideMenu();
         navigator.showHome(); // for my default screen
     }
 

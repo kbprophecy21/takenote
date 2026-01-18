@@ -1,0 +1,121 @@
+/* Full-screen blue board (same family as cb-root / nb-root) */
+.hb-root {
+    -fx-padding: 22;
+
+    -fx-background-color: linear-gradient(to bottom, #2f6fb6, #2b63a3);
+
+    -fx-effect: innershadow(gaussian, rgba(0,0,0,0.25), 18, 0.40, 0, 2);
+
+    -fx-border-color: rgba(0,0,0,0.12);
+    -fx-border-width: 1;
+}
+
+/* ScrollPane transparent so the blue board shows */
+.hb-scroll {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-border-color: transparent;
+}
+
+.hb-scroll > .viewport {
+    -fx-background-color: transparent;
+}
+
+.hb-scroll .corner {
+    -fx-background-color: transparent;
+}
+
+/* Content padding inside */
+.hb-content {
+    -fx-padding: 10 16 10 10;
+}
+
+/* Header */
+.hb-title {
+    -fx-font-size: 22px;
+    -fx-font-weight: 800;
+    -fx-text-fill: rgba(255,255,255,0.95);
+    -fx-padding: 2 0 6 2;
+}
+
+.hb-subtitle {
+    -fx-font-size: 12px;
+    -fx-font-weight: 700;
+    -fx-text-fill: rgba(255,255,255,0.75);
+    -fx-padding: 6 0 0 6;
+}
+
+/* Grid (layout only) */
+.hb-grid {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+/* Cloudy dashboard cards */
+.hb-card {
+    -fx-padding: 16;
+    -fx-spacing: 8;
+
+    -fx-background-color: rgba(255,255,255,0.90);
+    -fx-background-radius: 24;
+
+    -fx-border-color: rgba(0,0,0,0.06);
+    -fx-border-width: 1;
+    -fx-border-radius: 24;
+
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18), 18, 0.25, 0, 6);
+}
+
+/* Card text */
+.hb-card-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: 800;
+    -fx-opacity: 0.88;
+}
+
+.hb-card-subtitle {
+    -fx-font-size: 12px;
+    -fx-font-weight: 700;
+    -fx-opacity: 0.70;
+}
+
+/* Buttons inside cards (same energy as nb-btn/cloud-btn) */
+.hb-btn {
+    -fx-background-color: rgba(0,0,0,0.06);
+    -fx-background-radius: 18;
+
+    -fx-border-color: rgba(0,0,0,0.10);
+    -fx-border-width: 1;
+    -fx-border-radius: 18;
+
+    -fx-padding: 8 16 8 16;
+    -fx-font-weight: 800;
+
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.14), 10, 0.25, 0, 3);
+}
+
+.hb-btn:hover {
+    -fx-background-color: rgba(0,0,0,0.10);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18), 14, 0.30, 0, 4);
+    -fx-translate-y: -1;
+}
+
+.hb-btn:pressed {
+    -fx-translate-y: 0;
+    -fx-background-color: rgba(0,0,0,0.05);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 8, 0.20, 0, 2);
+}
+
+.hb-btn-secondary {
+    -fx-background-color: rgba(0,0,0,0.03);
+    -fx-background-radius: 18;
+    -fx-border-radius: 18;
+    -fx-border-color: rgba(0,0,0,0.08);
+    -fx-border-width: 1;
+
+    -fx-padding: 8 16 8 16;
+    -fx-font-weight: 800;
+}
+
+.hb-btn-secondary:hover { -fx-background-color: rgba(0,0,0,0.08); }

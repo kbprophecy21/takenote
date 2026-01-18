@@ -21,6 +21,9 @@ public final class Routes {
 
     public static final String NOTE_EDITOR_VIEW =
             "/com/kyle/takenote/fxml/view/NoteEditorView.fxml";
+    
+    public static final String SIDE_MENU_VIEW =
+            "/com/kyle/takenote/fxml/component/SideMenu.fxml";
 
           
             

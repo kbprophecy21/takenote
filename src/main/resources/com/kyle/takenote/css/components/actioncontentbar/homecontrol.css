@@ -1,0 +1,67 @@
+/* Wrapper */
+.cloud-wrap {
+    -fx-padding: 0 14 14 14;
+    -fx-translate-y: -10; /* cover host top border */
+}
+
+/* The main cloud body (pill panel) */
+.cloud-body {
+    -fx-background-color: rgba(255,255,255,0.90);
+    -fx-background-radius: 24;
+    -fx-min-height: 64;
+    -fx-pref-height: 64;
+
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18), 18, 0.25, 0, 6);
+    -fx-border-color: rgba(0,0,0,0.06);
+    -fx-border-width: 1;
+    -fx-border-radius: 24;
+}
+
+/* The cloud “cap” (wavy top edge) */
+.cloud-top {
+    -fx-background-color: rgba(255,255,255,0.90);
+
+    -fx-translate-y: -20;
+    -fx-min-height: 44;
+    -fx-pref-height: 44;
+
+    -fx-shape: "M 0 40
+                C 40 15, 80 15, 120 35
+                C 150 10, 200 10, 230 35
+                C 260 10, 310 10, 340 35
+                C 370 15, 420 15, 460 35
+                C 500 10, 550 10, 580 35
+                C 620 15, 660 15, 720 40
+                L 720 80 L 0 80 Z";
+}
+
+/* Content padding inside the cloud */
+.cloud-content {
+    -fx-padding: 14 18 14 18;
+}
+
+/* Typography */
+.cloud-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: 800;
+    -fx-opacity: 0.85;
+}
+
+/* Buttons */
+.cloud-btn {
+    -fx-background-radius: 14;
+    -fx-padding: 8 14 8 14;
+    -fx-font-weight: 800;
+    -fx-background-color: rgba(0,0,0,0.06);
+}
+
+.cloud-btn:hover { -fx-background-color: rgba(0,0,0,0.10); }
+
+.cloud-btn-secondary {
+    -fx-background-radius: 14;
+    -fx-padding: 8 14 8 14;
+    -fx-font-weight: 800;
+    -fx-background-color: rgba(0,0,0,0.03);
+}
+
+.cloud-btn-secondary:hover { -fx-background-color: rgba(0,0,0,0.08); }

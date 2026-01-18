@@ -2,13 +2,39 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import java.net.URL?>
 
-<HBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      spacing="10" 
-      fx:controller="com.kyle.takenote.ui.controller.component.actionbarcontroller.HomeActionBarController">
-    
-    <Label text="Home Control Action Bar Here"/>
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.kyle.takenote.ui.controller.component.actionbarcontroller.HomeActionBarController"
+           styleClass="cloud-wrap">
 
-    <Button text="+ New Note" onAction="#handleNewNote"/>
-</HBox>
+    <stylesheets>
+        <URL value="@/com/kyle/takenote/css/components/actioncontentbar/homecontrol.css"/>
+    </stylesheets>
+
+    <VBox spacing="0">
+        <Region styleClass="cloud-top"/>
+
+        <HBox spacing="10"
+              alignment="CENTER_LEFT"
+              styleClass="cloud-body cloud-content">
+
+            
+
+            <!-- left cluster -->
+            <Button text="+ New Note" onAction="#handleNewNote" styleClass="cloud-btn"/>
+            <Button text="+ New Collection" onAction="#handleNewCollection" styleClass="cloud-btn-secondary"/>
+            <Button text="+ Task" onAction="#handleQuickAddTask" styleClass="cloud-btn-secondary"/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <!-- right cluster -->
+            <Button text="Search" onAction="#handleSearch" styleClass="cloud-btn"/>
+            <Button text="Today" onAction="#handleFocusToday" styleClass="cloud-btn-secondary"/>
+            <Button text="Recent" onAction="#handleFocusRecent" styleClass="cloud-btn-secondary"/>
+            <Button text="Refresh" onAction="#handleRefreshHome" styleClass="cloud-btn-secondary"/>
+
+        </HBox>
+    </VBox>
+</StackPane>

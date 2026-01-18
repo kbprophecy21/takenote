@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import java.net.URL?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.kyle.takenote.ui.controller.component.SideMenuController"
+      prefWidth="260" spacing="12"
+      styleClass="side-menu"> <!--TODO: remember to fix the border radius on the side menu bar later.-->
+
+    <!-- attach css just for this component -->
+    <stylesheets>
+        <URL value="@/com/kyle/takenote/css/components/sidemenu.css"/>
+    </stylesheets>
+
+    <!-- Header / profile -->
+    <HBox spacing="10" alignment="CENTER_LEFT" styleClass="sm-header">
+        <ImageView fx:id="avatarImage" fitHeight="40" fitWidth="40" preserveRatio="true" styleClass="sm-avatar">
+            <image>
+                <Image url="@/com/kyle/takenote/images/testImage.jpg"/>
+            </image>
+        </ImageView>
+
+        <VBox spacing="2">
+            <Label text="Kyle Brewer" styleClass="sm-name"/>
+            <Label text="kylebrewerkb1995@gmail.com" styleClass="sm-email"/>
+        </VBox>
+    </HBox>
+
+    <!-- Quick actions -->
+    <VBox spacing="8" styleClass="sm-section">
+        <Label text="Quick actions" styleClass="sm-section-title"/>
+        <Button text="+ New Note" onAction="#handleNewNote" maxWidth="Infinity" styleClass="sm-btn"/>
+        <Button text="+ New Collection" onAction="#handleNewCollection" maxWidth="Infinity" styleClass="sm-btn"/>
+    </VBox>
+
+    <Separator styleClass="sm-sep"/>
+
+    <!-- Navigation -->
+    <VBox spacing="8" styleClass="sm-section">
+        <Label text="Navigate" styleClass="sm-section-title"/>
+
+        <Button text="Home" onAction="#handleShowHome" maxWidth="Infinity" styleClass="sm-btn"/>
+        <Button text="Collections" onAction="#handleShowCollection" maxWidth="Infinity" styleClass="sm-btn"/>
+        <Button text="All Notes" onAction="#handleShowAllNotes" maxWidth="Infinity" styleClass="sm-btn"/>
+        <Button text="Trash" onAction="#handleShowTrash" maxWidth="Infinity" styleClass="sm-btn"/>
+    </VBox>
+
+    <!-- Spacer -->
+    <Region VBox.vgrow="ALWAYS"/>
+
+    <!-- Footer -->
+    <VBox spacing="8" styleClass="sm-footer">
+        <Separator styleClass="sm-sep"/>
+        <Button text="Settings" onAction="#handleShowSettings" maxWidth="Infinity" styleClass="sm-btn sm-btn-ghost"/>
+        <Button text="Help" onAction="#handleShowHelp" maxWidth="Infinity" styleClass="sm-btn sm-btn-ghost"/>
+    </VBox>
+</VBox>

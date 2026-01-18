@@ -23,6 +23,7 @@ public class Navigator {
 
     private final StackPane contentArea;
     private final StackPane controlsHost;
+    private final StackPane sideMenuArea;
 
     private Object controlsController; // current active controls controller.
     private UUID selectedNoteId;
@@ -35,11 +36,13 @@ public class Navigator {
     public Navigator(
             StackPane contentArea,
             StackPane controlsHost,
+            StackPane sideMenuArea,
             CollectionService collectionService,
             NoteService noteService
     ) {
         this.contentArea = contentArea;
         this.controlsHost = controlsHost;
+        this.sideMenuArea = sideMenuArea;
         this.collectionService = collectionService;
         this.noteService = noteService;
     }
@@ -77,6 +80,10 @@ public class Navigator {
     public void showCollections() {
         loadContent(Routes.COLLECTION_BOARD_VIEW);
         showControls(Routes.COLLECTION_CONTROLS);
+    }
+
+    public void showSideMenu() {
+        loadSideMenu(Routes.SIDE_MENU_VIEW);
     }
 
     public void showNoteEditor(UUID collectionId, UUID noteId) {
@@ -126,26 +133,44 @@ public class Navigator {
         }
     }
 
-    private void showControls(String fxmlPath) {
-    try {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-        Parent root = loader.load();
+    private Object loadSideMenu(String fxmlPath) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Parent root = loader.load();
 
-        Object controller = loader.getController();
-        injectCommon(controller);
+            Object controller = loader.getController();
+            injectCommon(controller);
 
-        // push current selection into the newly loaded controls controller
-        if (controller instanceof SupportsSelectedNote s) {
-            s.setSelectedNoteId(selectedNoteId);
+            sideMenuArea.getChildren().setAll(root);
+            return controller;
+
+        } catch (IOException e) {
+            LOGGER.severe("Failed to load side menu: " + fxmlPath + " - " + e.getMessage());
+            return null;
         }
-
-        controlsController = controller;
-        controlsHost.getChildren().setAll(root);
-
-    } catch (IOException e) {
-        LOGGER.severe("Failed to load controls: " + fxmlPath + " - " + e.getMessage());
     }
-}
+
+
+    private void showControls(String fxmlPath) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Parent root = loader.load();
+
+            Object controller = loader.getController();
+            injectCommon(controller);
+
+            // push current selection into the newly loaded controls controller
+            if (controller instanceof SupportsSelectedNote s) {
+                s.setSelectedNoteId(selectedNoteId);
+            }
+
+            controlsController = controller;
+            controlsHost.getChildren().setAll(root);
+
+        } catch (IOException e) {
+            LOGGER.severe("Failed to load controls: " + fxmlPath + " - " + e.getMessage());
+        }
+    }
 
 
     private void injectCommon(Object controller) {
