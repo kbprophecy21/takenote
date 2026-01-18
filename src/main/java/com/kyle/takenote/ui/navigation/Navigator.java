@@ -1,12 +1,12 @@
 package com.kyle.takenote.ui.navigation;
 
 //-----------Java Imports-----------//
-import java.io.IOException;
 import java.util.UUID;
 import java.util.logging.Logger;
 
 import com.kyle.takenote.domain.service.CollectionService;
 import com.kyle.takenote.domain.service.NoteService;
+import com.kyle.takenote.domain.service.PageService;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -28,9 +28,11 @@ public class Navigator {
     private Object controlsController; // current active controls controller.
     private UUID selectedNoteId;
     private UUID selectedCollectionId;
+    private UUID activePageId;
 
     private final CollectionService collectionService;
     private final NoteService noteService;
+    private final PageService pageService;
 
     //--------Contructor----------//
     public Navigator(
@@ -38,13 +40,15 @@ public class Navigator {
             StackPane controlsHost,
             StackPane sideMenuArea,
             CollectionService collectionService,
-            NoteService noteService
+            NoteService noteService,
+            PageService pageService
     ) {
         this.contentArea = contentArea;
         this.controlsHost = controlsHost;
         this.sideMenuArea = sideMenuArea;
         this.collectionService = collectionService;
         this.noteService = noteService;
+        this.pageService = pageService;
     }
 
     //-----------------Methods----------------//
@@ -53,7 +57,15 @@ public class Navigator {
 
     public UUID getSelectedCollectionId() {return selectedCollectionId;}
 
-   public void setSelectedNoteId(UUID id) {
+    public UUID getActivePageId(){return this.activePageId;}
+
+    public void setActivePageId(UUID id) {
+        this.activePageId = id;
+
+        Object contentController = null;
+    }
+
+    public void setSelectedNoteId(UUID id) {
         this.selectedNoteId = id;
 
         if (controlsController instanceof SupportsSelectedNote s) {
@@ -78,8 +90,13 @@ public class Navigator {
     }
 
     public void showCollections() {
+        Object controller = loadContent(Routes.COLLECTION_BOARD_VIEW);
         loadContent(Routes.COLLECTION_BOARD_VIEW);
         showControls(Routes.COLLECTION_CONTROLS);
+
+        if (controller instanceof SupportsActivePage p) {
+            p.setActivePageId(activePageId);
+        }
     }
 
     public void showSideMenu() {
@@ -127,11 +144,13 @@ public class Navigator {
             contentArea.getChildren().setAll(root);
             return controller;
 
-        } catch (IOException e) {
-            LOGGER.severe("Failed to load content: " + fxmlPath + " - " + e.getMessage());
+        } catch (Exception e) {
+            LOGGER.severe("Failed to load content: " + fxmlPath);
+            e.printStackTrace(); // <-- THIS is what you need right now
             return null;
         }
     }
+
 
     private Object loadSideMenu(String fxmlPath) {
         try {
@@ -144,8 +163,9 @@ public class Navigator {
             sideMenuArea.getChildren().setAll(root);
             return controller;
 
-        } catch (IOException e) {
-            LOGGER.severe("Failed to load side menu: " + fxmlPath + " - " + e.getMessage());
+        } catch (Exception e) {
+            LOGGER.severe("Failed to load side menu: " + fxmlPath);
+            e.printStackTrace();
             return null;
         }
     }
@@ -167,8 +187,9 @@ public class Navigator {
             controlsController = controller;
             controlsHost.getChildren().setAll(root);
 
-        } catch (IOException e) {
-            LOGGER.severe("Failed to load controls: " + fxmlPath + " - " + e.getMessage());
+        } catch (Exception e) {
+            LOGGER.severe("Failed to load controls: " + fxmlPath);
+            e.printStackTrace();
         }
     }
 
@@ -182,6 +203,10 @@ public class Navigator {
         if (controller instanceof SupportsNavigator c) {
             c.setNavigator(this);
         }
+        if (controller instanceof SupportsPageService p) {
+            p.setPageService(pageService);
+        }
+
         
     }
 
@@ -210,4 +235,13 @@ public class Navigator {
     public interface SupportsSelectedCollection {
         void setSelectedCollectionId(UUID id);
     }
+
+    public interface SupportsPageService {
+        void setPageService(com.kyle.takenote.domain.service.PageService ps);
+    }
+
+    public interface SupportsActivePage {
+        void setActivePageId(UUID id);
+    }
+
 }

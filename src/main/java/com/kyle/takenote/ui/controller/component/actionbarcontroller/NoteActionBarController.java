@@ -85,7 +85,7 @@ public class NoteActionBarController
                         ? activeCollectionId
                         : collectionService.getOrCreateDefaultCollection().getId();
 
-        Note created = noteService.createNote(targetCollectionId, "", "");
+        Note created = noteService.createNote(null, targetCollectionId, "", "");
 
         collectionService.saveToDisk();
         noteService.saveToDisk();

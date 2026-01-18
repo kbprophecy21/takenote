@@ -98,7 +98,7 @@ public class CollectionActionBarController
                         ? activeCollectionId
                         : collectionService.getOrCreateDefaultCollection().getId();
 
-        Note created = noteService.createNote(targetCollectionId, "", "");
+        Note created = noteService.createNote(null, targetCollectionId, "", "");
 
         collectionService.saveToDisk();
         noteService.saveToDisk();
@@ -111,16 +111,24 @@ public class CollectionActionBarController
     
 
     @FXML
-    private void handleNewCollection(){
-
-        //TODO: Update later for better UI/UX design.
-        
+    private void handleNewCollection() {
         requireInjected();
 
-        Collection created = collectionService.createCollection("Untitled Name");
+        // Use the page currently selected in the app
+        UUID pageId = navigator.getActivePageId();
+
+        // Fallback to default page if nothing selected yet
+        if (pageId == null) {
+            pageId = collectionService.getDefaultPageId();
+        }
+
+        Collection created = collectionService.createCollection(pageId, "Untitled Name");
         collectionService.saveToDisk();
+
+        // refresh board
         navigator.showCollections();
     }
+
 
 
     @FXML

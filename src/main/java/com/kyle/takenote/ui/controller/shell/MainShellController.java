@@ -4,6 +4,7 @@ package com.kyle.takenote.ui.controller.shell;
 
 import com.kyle.takenote.domain.service.CollectionService;
 import com.kyle.takenote.domain.service.NoteService;
+import com.kyle.takenote.domain.service.PageService;
 import com.kyle.takenote.ui.navigation.Navigator;
 
 import javafx.fxml.FXML;
@@ -24,6 +25,7 @@ public class MainShellController  {
 
     private CollectionService collectionService;
     private NoteService noteService;
+    private PageService pageService;
 
     private Navigator navigator;
 
@@ -58,11 +60,12 @@ public class MainShellController  {
 
     //-----------------------Methods-----------------------------//
 
-    public void setServices(CollectionService cs, NoteService ns) {
+    public void setServices(CollectionService cs, NoteService ns, PageService ps) {
         this.collectionService = cs;
         this.noteService = ns;
+        this.pageService = ps;
 
-        this.navigator = new Navigator(contentArea, controlHost, sideMenuArea, cs, ns);
+        this.navigator = new Navigator(contentArea, controlHost, sideMenuArea, cs, ns, ps);
         navigator.showSideMenu();
         navigator.showHome(); // for my default screen
     }

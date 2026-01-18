@@ -13,10 +13,11 @@ import com.kyle.takenote.ui.navigation.Navigator;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
-import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
 
 
 
@@ -45,7 +46,7 @@ public class NoteBoardViewController
 
 
     //---FXML Fields-------//
-   @FXML private FlowPane noteBoard;
+   @FXML private Pane noteBoard;
    @FXML private Label collectionNameLabel;
 
     
@@ -115,6 +116,12 @@ public class NoteBoardViewController
         noteController.setNavigator(navigator);
         noteController.setData(n.getId(), n.getTitle(), n.getBody());
 
+        cardRoot.setLayoutX(n.getPosX());
+        cardRoot.setLayoutY(n.getPosY());
+
+        UUID id = n.getId();
+        enableDragMove(cardRoot, id);
+
         noteController.setActiveCollectionId(activeCollectionId);
         
         noteBoard.getChildren().add(cardRoot);
@@ -124,6 +131,51 @@ public class NoteBoardViewController
       catch (IOException e){
         throw new RuntimeException("Failed to load NoteCard.fxml", e);
       }
+    }
+
+
+
+    private void enableDragMove(Node card, UUID noteId) {
+
+        final double[] offset = new double[2];
+        final boolean[] moved = new boolean[] { false };
+
+        card.setOnMousePressed(e -> {
+            // mouse offset inside the card
+            offset[0] = e.getX();
+            offset[1] = e.getY();
+            moved[0] = false;
+            card.toFront();
+            e.consume();
+        });
+
+        card.setOnMouseDragged(e -> {
+            moved[0] = true;
+
+            // convert mouse point to board coords
+            var p = noteBoard.sceneToLocal(e.getSceneX(), e.getSceneY());
+
+            double newX = p.getX() - offset[0];
+            double newY = p.getY() - offset[1];
+
+            card.setLayoutX(newX);
+            card.setLayoutY(newY);
+
+            e.consume();
+        });
+
+        card.setOnMouseReleased(e -> {
+            // only save if it was actually dragged (prevents click from saving)
+            if (moved[0]) {
+                noteService.updateNotePosition(
+                    noteId,
+                    card.getLayoutX(),
+                    card.getLayoutY()
+                );
+                noteService.saveToDisk();
+            }
+            e.consume();
+        });
     }
 
 

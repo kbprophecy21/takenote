@@ -41,8 +41,9 @@
     -fx-padding: 2 0 10 2;
 }
 
-/* Grid just lays out cards */
-.cb-grid {
+/* Free-position board surface (Pane) */
+.cb-board {
     -fx-background-color: transparent;
     -fx-padding: 0;
 }
+

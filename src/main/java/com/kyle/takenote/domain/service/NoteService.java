@@ -17,9 +17,11 @@ import com.kyle.takenote.infrastructure.persistence.json.JsonNoteRepository;
  */
 public class NoteService {
 
-    CollectionService collectService;
-    ArrayList<Note> listOfNotes;
-    JsonNoteRepository repo;
+    private CollectionService collectService;
+    private ArrayList<Note> listOfNotes;
+    private JsonNoteRepository repo;
+
+    private UUID defaultPageId;
 
     //private final JsonNoteRepository repo;
     
@@ -37,15 +39,18 @@ public class NoteService {
 
     //-----------------------------Methods---------------------------//
 
-
+    public void setDefaultPageId(UUID id) {
+        this.defaultPageId = id;
+    }
     
-    public Note createNote(UUID collectionId, String title, String body){
+    public Note createNote(UUID pageId, UUID collectionId, String title, String body){
         UUID finalCollectionId = resolveCollectionId(collectionId);
 
         String safeTitle = (title == null) ? "" : title; // new way for me to write if statements
         String safeBody = (body == null) ? "" : body;
 
         Note note = new Note(finalCollectionId, safeTitle, safeBody);
+        note.setPageId(resolvePageId(pageId));
         addNote(note);
         return note;
     }
@@ -55,7 +60,7 @@ public class NoteService {
      * This one is for the default collection.
      */
     public Note createNote(String title, String body){
-        return createNote(null, title, body);
+        return createNote( null, null, title, body);
     }
     
     private void addNote(Note note){ 
@@ -85,6 +90,15 @@ public class NoteService {
 
     public List<Note> getAllNotes() {
         return new ArrayList<>(listOfNotes);
+    }
+
+    public Note getNoteById(UUID id) {
+        for (Note n : listOfNotes) {
+            if (n.getId().equals(id)){
+                return n;
+            }
+        }
+        return null;
     }
 
 
@@ -140,6 +154,30 @@ public class NoteService {
                 if (n.getCollectionId() == null) n.setCollectionId(defId);
             }
         }
+
+        double startX = 40;
+        double startY = 40;
+        double stepX = 260;
+        double stepY = 180;
+
+        int i = 0;
+        for (Note note: this.listOfNotes){
+            if (note.getPosX() == 0.0 && note.getPosY() == 0.0){
+                int col = i % 4;
+                int row = i / 4;
+                note.setPosX(startX + col * stepX);
+                note.setPosY(startY + row * stepY);
+                i++;
+            }
+        }
+        
+        if (defaultPageId != null) {
+            for (Note n : listOfNotes) {
+                if (n.getPageId() == null) {
+                    n.setPageId(defaultPageId);
+                }
+            }
+        }
     }
 
 
@@ -147,6 +185,25 @@ public class NoteService {
     public void saveToDisk(){
         repo.saveAll(listOfNotes);
     }
+
+
+    public void updateNotePosition(UUID id, double x, double y){
+        Note note = getNoteById(id);
+        if (note == null) return;
+
+        note.setPosX(x);
+        note.setPosY(y);
+        note.setUpdatedAt();
+
+    }
+
+    //-----------Helper Methods-------------//
+
+    private UUID resolvePageId(UUID pageId) {
+        if (pageId != null) return pageId;
+        return defaultPageId; // can be null if I forgets to set it, but set it inside App.java for now 
+    }
+
 
     
 

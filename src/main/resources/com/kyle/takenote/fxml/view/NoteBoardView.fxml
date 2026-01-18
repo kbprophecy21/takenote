@@ -34,13 +34,11 @@
                             onAction="#handleBackToCollectionBoard"
                             styleClass="nb-btn" />
                 </HBox>
-
-
-                <!-- Notes grid -->
-                <FlowPane fx:id="noteBoard"
-                          hgap="14" vgap="22"
-                          prefWrapLength="900"
-                          styleClass="nb-grid"/>
+                
+                <Pane fx:id="noteBoard"
+                          minWidth="1400"
+                          minHeight="900"
+                          styleClass="nb-board"/>
             </VBox>
         </content>
 

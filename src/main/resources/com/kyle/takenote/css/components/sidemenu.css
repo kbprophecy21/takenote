@@ -62,6 +62,93 @@
     -fx-opacity: 0.25;
 }
 
+
+/* ---------------- Pages section (below Navigate) ---------------- */
+
+.sm-divider {
+    -fx-padding: 10 0 10 0;
+}
+
+.sm-divider .line {
+    -fx-border-color: rgba(0,0,0,0.12);
+    -fx-border-width: 1 0 0 0;
+}
+
+.sm-pages {
+    -fx-padding: 4 10 6 10;
+}
+
+.sm-pages-title {
+    -fx-font-size: 12px;
+    -fx-font-weight: 800;
+    -fx-text-fill: rgba(0,0,0,0.65);
+}
+
+/* "+ New" button matches your soft rounded UI */
+.sm-pages-add {
+    -fx-background-color: rgba(255,255,255,0.75);
+    -fx-border-color: rgba(0,0,0,0.10);
+    -fx-border-width: 1;
+    -fx-background-radius: 14;
+    -fx-border-radius: 14;
+
+    -fx-padding: 6 10 6 10;
+    -fx-font-size: 12px;
+    -fx-font-weight: 800;
+    -fx-text-fill: rgba(0,0,0,0.70);
+}
+
+.sm-pages-add:hover {
+    -fx-background-color: rgba(255,255,255,0.92);
+}
+
+.sm-pages-add:pressed {
+    -fx-background-color: rgba(255,255,255,0.68);
+}
+
+/* List container */
+.sm-pages-list {
+    -fx-background-color: rgba(255,255,255,0.35);
+    -fx-border-color: rgba(0,0,0,0.10);
+    -fx-border-width: 1;
+    -fx-background-radius: 16;
+    -fx-border-radius: 16;
+    -fx-padding: 6;
+}
+
+/* ListView internals */
+.sm-pages-list .viewport {
+    -fx-background-color: transparent;
+}
+
+.sm-pages-list .list-cell {
+    -fx-background-color: rgba(255,255,255,0.70);
+    -fx-background-radius: 14;
+    -fx-padding: 10 12 10 12;
+
+    -fx-font-size: 13px;
+    -fx-font-weight: 800;
+    -fx-text-fill: rgba(0,0,0,0.75);
+}
+
+.sm-pages-list .list-cell:filled:hover {
+    -fx-background-color: rgba(255,255,255,0.92);
+}
+
+/* Selected page = subtle highlight, like your selected nav pill */
+.sm-pages-list .list-cell:filled:selected {
+    -fx-background-color: rgba(0,0,0,0.06);
+    -fx-text-fill: rgba(0,0,0,0.85);
+}
+
+/* Remove ugly default focus ring */
+.sm-pages-list:focused,
+.sm-pages-list .list-cell:focused {
+    -fx-faint-focus-color: transparent;
+    -fx-focus-color: transparent;
+}
+
+
 /* ---------- Buttons (match nb-btn / cloud-btn energy) ---------- */
 .sm-btn {
     -fx-background-color: rgba(0,0,0,0.06);

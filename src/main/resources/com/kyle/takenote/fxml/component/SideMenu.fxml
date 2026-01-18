@@ -49,6 +49,21 @@
         <Button text="Trash" onAction="#handleShowTrash" maxWidth="Infinity" styleClass="sm-btn"/>
     </VBox>
 
+    <Separator styleClass="sm-divider" />
+
+    <VBox spacing="8" styleClass="sm-pages">
+    
+        <HBox alignment="CENTER_LEFT" spacing="8">
+            <Label text="Pages" styleClass="sm-pages-title"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="+ New" onAction="#handleCreatePage" styleClass="sm-pages-add"/>
+        </HBox>
+
+        <ListView fx:id="pagesListView"
+                prefHeight="220"
+                styleClass="sm-pages-list"/>
+    </VBox>
+
     <!-- Spacer -->
     <Region VBox.vgrow="ALWAYS"/>
 

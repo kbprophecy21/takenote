@@ -2,6 +2,7 @@ package com.kyle.takenote.ui.controller.view;
 
 //--------Java Imports---------//
 import java.io.IOException;
+import java.util.UUID;
 
 import com.kyle.takenote.domain.model.Collection;
 import com.kyle.takenote.domain.service.CollectionService;
@@ -15,14 +16,14 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.TransferMode;
-import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
 
 /**
  * Notes: this class controls the Collection Board View. 
  */
 
 public class CollectionBoardViewController 
-    implements Navigator.SupportsNavigator, Navigator.SupportsServices {
+    implements Navigator.SupportsNavigator, Navigator.SupportsServices, Navigator.SupportsActivePage {
     
     //--------Fields--------//
         /**
@@ -33,13 +34,15 @@ public class CollectionBoardViewController
     private Navigator navigator;
     private CollectionService collectionService;
     private NoteService noteService;
+    private UUID activePageId;
+    private UUID defaultPageId;
 
     private Node draggedCard;
     private int lastHoverIndex = -1;
     
     //---------FXML Fields----------//
     @FXML
-    private FlowPane collectionBoard;
+    private Pane collectionBoard;
 
     
 
@@ -57,7 +60,14 @@ public class CollectionBoardViewController
         refresh();
     }
 
+    @Override
+    public void setActivePageId(UUID id) {
+        this.activePageId = id;
+        refresh();
+    }
+
    
+    
 
     private void addCollectionCard(Collection c, NoteService ns) {
         try {
@@ -71,7 +81,12 @@ public class CollectionBoardViewController
             cardController.setNavigator(navigator);
             cardController.setData(c.getId(), c.getName(), ns.getNotesForCollection(c.getId()).size());
 
-            handleDragReorder(cardRoot);
+            cardRoot.setLayoutX(c.getPosX());
+            cardRoot.setLayoutY(c.getPosY());
+
+            UUID id = c.getId();
+            enableDragMove(cardRoot, id);
+            
             collectionBoard.getChildren().add(cardRoot);
 
         } catch (IOException e) {
@@ -79,7 +94,16 @@ public class CollectionBoardViewController
         }
     }
 
+    
+    public void setDefaultPageId(UUID id) {this.defaultPageId = id;}
 
+    public UUID getDefaultPageId(){
+        return defaultPageId;
+    }
+
+    /**
+     * Note: use this for later use in other type features. 
+     */
     private void handleDragReorder(Node card){
 
         card.setOnDragDetected(e -> {
@@ -138,21 +162,68 @@ public class CollectionBoardViewController
         });
     }
 
+    private void enableDragMove(Node card, UUID collectionId) {
+
+        final double[] offset = new double[2];
+        final boolean[] moved = new boolean[] { false };
+
+        card.setOnMousePressed(e -> {
+            // mouse offset inside the card
+            offset[0] = e.getX();
+            offset[1] = e.getY();
+            moved[0] = false;
+            card.toFront();
+            e.consume();
+        });
+
+        card.setOnMouseDragged(e -> {
+            moved[0] = true;
+
+            // convert mouse point to board coords
+            var p = collectionBoard.sceneToLocal(e.getSceneX(), e.getSceneY());
+
+            double newX = p.getX() - offset[0];
+            double newY = p.getY() - offset[1];
+
+            card.setLayoutX(newX);
+            card.setLayoutY(newY);
+
+            e.consume();
+        });
+
+        card.setOnMouseReleased(e -> {
+            // only save if it was actually dragged (prevents click from saving)
+            if (moved[0]) {
+                collectionService.updateCollectionPosition(
+                    collectionId,
+                    card.getLayoutX(),
+                    card.getLayoutY()
+                );
+                collectionService.saveToDisk();
+            }
+            e.consume();
+        });
+    }
+
+
    
 
 
 
     //----------Helper Methods----------//
 
-     private void refresh() {
-        if (collectionBoard == null || collectionService == null || navigator == null) return;
+    private void refresh() {
+        if (collectionBoard == null || collectionService == null || noteService == null || navigator == null) return;
 
         collectionBoard.getChildren().clear();
 
-        
-        for (Collection collect : collectionService.getAllCollections()) {
-            addCollectionCard(collect, noteService);
-            
+        UUID pageId = navigator.getActivePageId();
+        if (pageId == null) pageId = collectionService.getDefaultPageId();
+
+        for (Collection c : collectionService.getCollectionsForPage(pageId)) {
+            addCollectionCard(c, noteService);
         }
     }
+
+
 }

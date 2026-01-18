@@ -6,7 +6,13 @@
     /* shadow to lift it off the board */
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 12, 0.3, 0, 4);
 
-    -fx-cursor: hand;
+    -fx-cursor: open-hand;
+}
+
+/* While dragging: no hover lift, stronger focus shadow */
+.note-card.dragging {
+    -fx-cursor: closed-hand;
+    -fx-translate-y: 0; /* prevents hover lift jump */
 }
 
 .note-card:hover {

@@ -17,6 +17,10 @@ public class Collection {
     private String name;
     private LocalDateTime updatedAt;
     private LocalDateTime createdAt;
+    private UUID pageId;
+
+    private double posX;
+    private double posY;
 
 
     //-----------Constructors------------------//
@@ -26,6 +30,8 @@ public class Collection {
         this.name = name;
         this.updatedAt = LocalDateTime.now();
         this.createdAt = LocalDateTime.now();
+        this.posX = 40;
+        this.posY = 40;
         
     }
 
@@ -34,6 +40,8 @@ public class Collection {
         this.name = name;
         this.updatedAt = LocalDateTime.now();
         this.createdAt = LocalDateTime.now();
+        this.posX = 40;
+        this.posY = 40;
     }
 
     public Collection() {
@@ -44,7 +52,10 @@ public class Collection {
     //-----------------Getters & Setters ---------------//
 
     public UUID getId(){return this.id;};
-    public void setId(UUID id){this.id = id;}; 
+    public void setId(UUID id){this.id = id;};
+
+    public UUID getPageId(){return this.pageId;}
+    public void setPageId(UUID id) {this.pageId = id;}
 
     public LocalDateTime getUpdatedAt(){return this.updatedAt;};
     public void setUpdatedAt(LocalDateTime upDateTime){this.updatedAt = upDateTime;};
@@ -54,7 +65,13 @@ public class Collection {
 
     public String getName(){return this.name;};
     public void setName(String name){this.name = name;};
-    
+
+    public double getPosX(){return this.posX;};
+    public void setPosX(double posX) {this.posX = posX;}
+
+    public double getPosY(){return this.posY;};
+    public void setPosY(double posY){this.posY = posY;}
+
     public void rename(String name){
         this.name = name;
         touch();

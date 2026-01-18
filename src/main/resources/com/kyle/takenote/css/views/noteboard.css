@@ -45,7 +45,7 @@
 }
 
 /* Grid should be layout-only */
-.nb-grid {
+.nb-board {
     -fx-background-color: transparent;
     -fx-padding: 0;
 }

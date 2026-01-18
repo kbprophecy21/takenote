@@ -83,3 +83,19 @@
 .collection-card:pressed .folder-body {
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.22), 10, 0.25, 0, 3);
 }
+
+/* While dragging: no hover lift, stronger focus shadow */
+.collection-card.dragging {
+    -fx-cursor: closed-hand;
+    -fx-translate-y: 0; /* prevents hover lift jump */
+}
+
+.collection-card.dragging .folder-body {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.45), 26, 0.45, 0, 10);
+}
+
+/* Optional: when not dragging, show grab cursor */
+.collection-card {
+    -fx-cursor: open-hand;
+}
+
