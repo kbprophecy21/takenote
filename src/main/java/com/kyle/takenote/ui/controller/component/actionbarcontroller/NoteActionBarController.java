@@ -89,10 +89,6 @@ public class NoteActionBarController
         navigator.showNoteEditor(activeCollectionId, created.getId());
     }
 
-
- 
-    
-
     @FXML
     private void handleNewCollection(){
         //TODO: Add logic here for creating new Collection.
