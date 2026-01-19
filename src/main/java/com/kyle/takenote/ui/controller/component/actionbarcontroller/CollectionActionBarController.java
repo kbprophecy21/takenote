@@ -93,17 +93,14 @@ public class CollectionActionBarController
 
         requireInjected();
 
-        UUID targetCollectionId =
-                (activeCollectionId != null)
-                        ? activeCollectionId
-                        : collectionService.getOrCreateDefaultCollection().getId();
+        
 
-        Note created = noteService.createNote(null, targetCollectionId, "", "");
+        Note created = noteService.createNote(null, activeCollectionId, "", "");
 
         collectionService.saveToDisk();
         noteService.saveToDisk();
 
-        navigator.showNoteEditor(targetCollectionId, created.getId());
+        navigator.showNoteEditor(activeCollectionId, created.getId());
     }
 
 
@@ -137,11 +134,7 @@ public class CollectionActionBarController
 
         if (selectedCollectionId == null) return;
 
-        // Don’t allow deleting default (if it exists)
-        if (selectedCollectionId.equals(collectionService.getDefaultCollectionId())) {
-            return;
-        }
-
+        
         // Delete notes that belong to this collection (important!)
         for (var note : new java.util.ArrayList<>(noteService.getNotesForCollection(selectedCollectionId))) {
             noteService.deleteNote(note.getId());

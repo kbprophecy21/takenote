@@ -23,8 +23,6 @@
             
 
             <!-- left cluster -->
-            <Button text="+ New Note" onAction="#handleNewNote" styleClass="cloud-btn"/>
-            <Button text="+ New Collection" onAction="#handleNewCollection" styleClass="cloud-btn-secondary"/>
             <Button text="+ Task" onAction="#handleQuickAddTask" styleClass="cloud-btn-secondary"/>
 
             <Region HBox.hgrow="ALWAYS"/>

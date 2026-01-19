@@ -33,6 +33,7 @@
 
         <Region HBox.hgrow="ALWAYS"/>
 
+        <Button text="+ New Note" onAction="#handleNewNote" styleClass="cloud-btn"/>
         <Button text="+ New Collection" onAction="#handleNewCollection" styleClass="cloud-btn"/>
         <Button fx:id= "deleteCollectionBtn" disable="true" text="- Delete Collection" onAction="#handleDeleteCollection" styleClass="cloud-btn"/>
         <Button text="Manage" styleClass="cloud-btn-secondary"/>

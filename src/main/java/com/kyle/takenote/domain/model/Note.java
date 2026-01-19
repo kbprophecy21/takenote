@@ -16,20 +16,22 @@ public class Note {
     private String title = ""; // optional to the user but can add at creation or later. Edit at anytime.
     private String body; // Contains text data, (note text, and other forms of information for the user)
     private UUID collectionId;
+    private UUID pageId;
     private LocalDateTime updatedAt;
     private LocalDateTime createdAt;
 
-    private UUID pageId;
+    
 
     private double posX;
     private double posY;
 
 
     //-----------------Constuctors-------------//
-    public Note (UUID collectId, String title, String body) {
+    public Note (UUID pageId, UUID collectId, String title, String body) {
 
         this.id = (UUID.randomUUID());
         this.collectionId = collectId;
+        this.pageId = pageId;
         this.title = title;
         this.body = body;
         this.createdAt = LocalDateTime.now();
@@ -39,7 +41,7 @@ public class Note {
     };
 
     /**
-     * Required for jackson
+     * Required for jackson(Json).
      */
     public Note() {
 

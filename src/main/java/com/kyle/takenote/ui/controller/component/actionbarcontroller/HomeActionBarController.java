@@ -4,7 +4,6 @@ package com.kyle.takenote.ui.controller.component.actionbarcontroller;
 import java.io.IOException;
 import java.util.UUID;
 
-import com.kyle.takenote.domain.model.Note;
 import com.kyle.takenote.domain.service.CollectionService;
 import com.kyle.takenote.domain.service.NoteService;
 import com.kyle.takenote.ui.navigation.Navigator;
@@ -79,32 +78,7 @@ public class HomeActionBarController
     @FXML private void handleFocusRecent() { /* TODO */ }
     @FXML private void handleRefreshHome() { /* TODO */ }
 
-   @FXML
-    private void handleNewNote() {
-
-        requireInjected();
-
-        UUID targetCollectionId =
-                (activeCollectionId != null)
-                        ? activeCollectionId
-                        : collectionService.getOrCreateDefaultCollection().getId();
-
-        Note created = noteService.createNote(null, targetCollectionId, "", "");
-
-        collectionService.saveToDisk();
-        noteService.saveToDisk();
-
-        navigator.showNoteEditor(targetCollectionId, created.getId());
-    }
-
- 
-    
-
-    @FXML
-    private void handleNewCollection(){
-        //TODO: Add logic here for creating new Collection.
-    }
-
+   
 
     
 

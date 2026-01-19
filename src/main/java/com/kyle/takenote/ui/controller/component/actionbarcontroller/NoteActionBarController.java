@@ -80,17 +80,13 @@ public class NoteActionBarController
 
         requireInjected();
 
-        UUID targetCollectionId =
-                (activeCollectionId != null)
-                        ? activeCollectionId
-                        : collectionService.getOrCreateDefaultCollection().getId();
-
-        Note created = noteService.createNote(null, targetCollectionId, "", "");
+       
+        Note created = noteService.createNote(null, activeCollectionId, "", "");
 
         collectionService.saveToDisk();
         noteService.saveToDisk();
 
-        navigator.showNoteEditor(targetCollectionId, created.getId());
+        navigator.showNoteEditor(activeCollectionId, created.getId());
     }
 
 
@@ -106,16 +102,14 @@ public class NoteActionBarController
     @FXML
     private void handleDeleteNote(){
        requireInjected();
-        UUID targetCollectionId = (activeCollectionId != null)
-                ? activeCollectionId
-                : collectionService.getDefaultCollectionId();
+        
 
        if (selectedNoteId == null) return;
 
        if (noteService.deleteNote(selectedNoteId)) {
         noteService.saveToDisk();
        }
-       navigator.showNotesForCollection(targetCollectionId);
+       navigator.showNotesForCollection(activeCollectionId);
        navigator.setSelectedNoteId(null);
 
     }

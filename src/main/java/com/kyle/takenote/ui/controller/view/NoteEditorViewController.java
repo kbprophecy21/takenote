@@ -143,9 +143,6 @@ public class NoteEditorViewController
         activeNote.updateBody(uiBody == null ? "" : uiBody);
 
         
-        noteService.ensureNoteHasCollection(activeNote);
-
-        
         collectionService.saveToDisk();
         noteService.saveToDisk();
 

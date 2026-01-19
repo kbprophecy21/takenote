@@ -49,7 +49,7 @@ public class NoteService {
         String safeTitle = (title == null) ? "" : title; // new way for me to write if statements
         String safeBody = (body == null) ? "" : body;
 
-        Note note = new Note(finalCollectionId, safeTitle, safeBody);
+        Note note = new Note( null, finalCollectionId, safeTitle, safeBody);
         note.setPageId(resolvePageId(pageId));
         addNote(note);
         return note;
@@ -126,16 +126,6 @@ public class NoteService {
     }
 
 
-    public void ensureNoteHasCollection(Note note) {
-        if (note == null) return;
-
-        if (note.getCollectionId() == null) {
-            UUID defId = collectService.getOrCreateDefaultCollection().getId();
-            note.setCollectionId(defId);
-        }
-    }
-
-
 
     public void loadFromDisk() {
         List<Note> loaded = repo.loadAll();
@@ -145,15 +135,7 @@ public class NoteService {
 
         // Leave null collectionId as null.
         // (Optional migration: if default exists already, then attach)
-        UUID defId = null;
-        var def = collectService.getDefaultCollectionIfExists();
-        if (def != null) defId = def.getId();
-
-        if (defId != null) {
-            for (Note n : listOfNotes) {
-                if (n.getCollectionId() == null) n.setCollectionId(defId);
-            }
-        }
+        
 
         double startX = 40;
         double startY = 40;

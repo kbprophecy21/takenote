@@ -21,12 +21,11 @@ public class CollectionService {
 
     //--------Fields----------//
     private ArrayList<Collection> listOfCollections;
-    private Collection defaultCollection;
     private JsonCollectionRepository repo;
     private UUID defaultPageId;
 
     
-    private static final UUID DEFAULT_COLLECTION_ID = UUID.fromString("00000000-0000-0000-0000-000000000001");
+   
 
 
 
@@ -42,7 +41,7 @@ public class CollectionService {
 
     //-----------Getters & Setters---------//
 
-    public UUID getDefaultCollectionId(){return DEFAULT_COLLECTION_ID;}
+    
     
     public void setDefaultPageId(UUID id) {
         this.defaultPageId = id;
@@ -74,9 +73,7 @@ public class CollectionService {
         return newCollection;
     }
 
-    public Collection getDefaultCollection() {
-        return getDefaultCollectionIfExists(); 
-    }
+   
 
 
     public Collection getCollectionById(UUID id){
@@ -102,7 +99,7 @@ public class CollectionService {
 
         for (int i = 0; i < listOfCollections.size(); i++) {
             Collection current = listOfCollections.get(i);
-
+            
             if (current.getId().equals(id)){
                 listOfCollections.remove(i);
                     return true;
@@ -126,9 +123,6 @@ public class CollectionService {
         LinkedHashMap<UUID, Collection> unique = new LinkedHashMap<>();
         for (Collection c : this.listOfCollections) unique.putIfAbsent(c.getId(), c);
         this.listOfCollections = new ArrayList<>(unique.values());
-
-        
-        this.defaultCollection = getDefaultCollectionIfExists();
 
 
         double startX = 40;
@@ -163,31 +157,9 @@ public class CollectionService {
         repo.saveAll(listOfCollections);
     }
 
-    public Collection getDefaultCollectionIfExists() {
-        for (Collection c : listOfCollections) {
-            if (DEFAULT_COLLECTION_ID.equals(c.getId())) return c;
-        }
-        return null;
-    }
+   
 
-   public Collection getOrCreateDefaultCollection() {
-        Collection existing = getDefaultCollectionIfExists();
-        if (existing != null) {
-            // patch pageId if missing
-            if (existing.getPageId() == null) {
-                existing.setPageId(resolvePageId(null));
-            }
-            this.defaultCollection = existing;
-            return existing;
-        }
-
-        Collection created = new Collection(DEFAULT_COLLECTION_ID, "default");
-        created.setPageId(resolvePageId(null));
-
-        this.defaultCollection = created;
-        listOfCollections.add(0, created);
-        return created;
-    }
+   
 
 
 
@@ -216,16 +188,7 @@ public class CollectionService {
 
     //-----------Helper Methods------------//
     
-    private void ensureDefaultCollectionExists(){
-        for (Collection c : this.listOfCollections) {
-            if (getDefaultCollectionId().equals(c.getId())){
-                defaultCollection = c;
-                return;
-            }
-        }
-        this.defaultCollection = new Collection(getDefaultCollectionId(), "default");
-        listOfCollections.add(0, this.defaultCollection);
-    }
+   
 
 
     private UUID resolvePageId(UUID pageId) {
