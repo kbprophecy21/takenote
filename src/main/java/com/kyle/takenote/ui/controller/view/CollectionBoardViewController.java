@@ -49,23 +49,36 @@ public class CollectionBoardViewController
     //------------Methods---------------//
     @Override
     public void setNavigator(Navigator navigator) {
+        System.out.println("setNavigator called on " + this);
         this.navigator = navigator;
-        refresh();
+        ready();
     }
 
     @Override
     public void setServices(CollectionService cs, NoteService ns) {
+        System.out.println("setServices called on " + this);
         this.collectionService = cs;
         this.noteService = ns;
-        refresh();
+        ready();
     }
 
     @Override
     public void setActivePageId(UUID id) {
+        System.out.println("setActivePageId called on " + this + " with " + id);
         this.activePageId = id;
-        refresh();
+        ready();
     }
 
+    private void requireInjected() {
+        if (navigator == null || collectionService == null || noteService == null || activePageId == null) {
+            throw new IllegalStateException("CollectionBoardViewController.java not injected (services/navigator/activeId).");
+        }
+    }
+
+    @FXML
+    public void initialize() {
+        System.out.println("CollectionBoardViewController initialize: " + this);
+    }
    
     
 
@@ -101,7 +114,52 @@ public class CollectionBoardViewController
         return defaultPageId;
     }
 
-    /**
+   
+
+    private void enableDragMove(Node card, UUID collectionId) {
+
+        final double[] offset = new double[2];
+        final boolean[] moved = new boolean[] { false };
+
+        card.setOnMousePressed(e -> {
+            // mouse offset inside the card
+            offset[0] = e.getX();
+            offset[1] = e.getY();
+            moved[0] = false;
+            card.toFront();
+            e.consume();
+        });
+
+        card.setOnMouseDragged(e -> {
+            moved[0] = true;
+
+            // convert mouse point to board coords
+            var p = collectionBoard.sceneToLocal(e.getSceneX(), e.getSceneY());
+
+            double newX = p.getX() - offset[0];
+            double newY = p.getY() - offset[1];
+
+            card.setLayoutX(newX);
+            card.setLayoutY(newY);
+
+            e.consume();
+        });
+
+        card.setOnMouseReleased(e -> {
+            // only save if it was actually dragged (prevents click from saving)
+            if (moved[0]) {
+                collectionService.updateCollectionPosition(
+                    collectionId,
+                    card.getLayoutX(),
+                    card.getLayoutY()
+                );
+                collectionService.saveToDisk();
+            }
+            e.consume();
+        });
+    }
+
+     /**
      * Note: use this for later use in other type features. 
      */
     private void handleDragReorder(Node card){
@@ -161,69 +219,34 @@ public class CollectionBoardViewController
             e.consume();
         });
     }
-
-    private void enableDragMove(Node card, UUID collectionId) {
-
-        final double[] offset = new double[2];
-        final boolean[] moved = new boolean[] { false };
-
-        card.setOnMousePressed(e -> {
-            // mouse offset inside the card
-            offset[0] = e.getX();
-            offset[1] = e.getY();
-            moved[0] = false;
-            card.toFront();
-            e.consume();
-        });
-
-        card.setOnMouseDragged(e -> {
-            moved[0] = true;
-
-            // convert mouse point to board coords
-            var p = collectionBoard.sceneToLocal(e.getSceneX(), e.getSceneY());
-
-            double newX = p.getX() - offset[0];
-            double newY = p.getY() - offset[1];
-
-            card.setLayoutX(newX);
-            card.setLayoutY(newY);
-
-            e.consume();
-        });
-
-        card.setOnMouseReleased(e -> {
-            // only save if it was actually dragged (prevents click from saving)
-            if (moved[0]) {
-                collectionService.updateCollectionPosition(
-                    collectionId,
-                    card.getLayoutX(),
-                    card.getLayoutY()
-                );
-                collectionService.saveToDisk();
-            }
-            e.consume();
-        });
-    }
-
-
    
 
 
 
     //----------Helper Methods----------//
 
+    private void ready() {
+        if (navigator != null && collectionService != null && noteService != null) {refresh();}
+    }
+
+    
     private void refresh() {
-        if (collectionBoard == null || collectionService == null || noteService == null || navigator == null) return;
+
+        if (navigator == null || collectionService == null || noteService == null) {return;}
+
+        UUID pageId = (activePageId != null)
+                ? activePageId
+                : navigator.getActivePageId();
+
+        if (pageId == null) {pageId = defaultPageId;}
+        if (pageId == null) { System.out.println("ABORT: pageId still null"); return;}
 
         collectionBoard.getChildren().clear();
+        var collections = collectionService.getCollectionsForPage(pageId);
 
-        UUID pageId = navigator.getActivePageId();
-        if (pageId == null) pageId = collectionService.getDefaultPageId();
-
-        for (Collection c : collectionService.getCollectionsForPage(pageId)) {
+        for (Collection c : collections) {
             addCollectionCard(c, noteService);
         }
     }
-
 
 }

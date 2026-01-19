@@ -26,6 +26,7 @@ public class Navigator {
     private final StackPane sideMenuArea;
 
     private Object controlsController; // current active controls controller.
+    private Object contentController;
     private UUID selectedNoteId;
     private UUID selectedCollectionId;
     private UUID activePageId;
@@ -62,8 +63,11 @@ public class Navigator {
     public void setActivePageId(UUID id) {
         this.activePageId = id;
 
-        Object contentController = null;
+        if (contentController instanceof SupportsActivePage p) {
+            p.setActivePageId(id);
+        }
     }
+
 
     public void setSelectedNoteId(UUID id) {
         this.selectedNoteId = id;
@@ -90,14 +94,19 @@ public class Navigator {
     }
 
     public void showCollections() {
-        Object controller = loadContent(Routes.COLLECTION_BOARD_VIEW);
-        loadContent(Routes.COLLECTION_BOARD_VIEW);
-        showControls(Routes.COLLECTION_CONTROLS);
-
-        if (controller instanceof SupportsActivePage p) {
-            p.setActivePageId(activePageId);
-        }
+    if (activePageId == null) {
+        activePageId = pageService.getDefaultPageId(); // or however you do it
     }
+
+    Object controller = loadContent(Routes.COLLECTION_BOARD_VIEW);
+    showControls(Routes.COLLECTION_CONTROLS);
+
+    if (controller instanceof SupportsActivePage p) {
+        p.setActivePageId(activePageId);
+    }
+}
+
+
 
     public void showSideMenu() {
         loadSideMenu(Routes.SIDE_MENU_VIEW);
@@ -141,6 +150,7 @@ public class Navigator {
             Object controller = loader.getController();
             injectCommon(controller);
 
+            contentController = controller;
             contentArea.getChildren().setAll(root);
             return controller;
 

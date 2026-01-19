@@ -9,6 +9,10 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 
+
+/**
+ * Notes: This class is responsible for the controller of my collection cards.
+ */
 public class CollectionCardController implements Navigator.SupportsNavigator, Navigator.SupportsSelectedCollection {
     
     //------------Fields----------//

@@ -87,6 +87,12 @@ public class NoteBoardViewController
         }
     }
 
+    @FXML
+    public void initialize() {
+        System.out.println("CollectionBoardViewController initialize: " + this);
+    }
+
+
 
     private void renderNotesForActiveCollection() {
         if (noteBoard == null) throw new NullPointerException("\"noteBoard\" cannot be null (FXML injection didn't happen).");
