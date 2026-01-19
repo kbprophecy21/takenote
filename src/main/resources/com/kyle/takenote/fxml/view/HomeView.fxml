@@ -18,7 +18,10 @@
         <center>
             <ScrollPane fitToWidth="true"
                         pannable="true"
-                        styleClass="hb-scroll">
+                        styleClass="hb-scroll"
+                        hbarPolicy="NEVER"
+                        vbarPolicy="NEVER"
+                        fitToHeight="false">
 
                 <content>
                     <VBox spacing="14" styleClass="hb-content">

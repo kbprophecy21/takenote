@@ -102,13 +102,12 @@ public class CollectionService {
 
         for (int i = 0; i < listOfCollections.size(); i++) {
             Collection current = listOfCollections.get(i);
-            
-            if (!id.equals(defaultCollection.getId())) {
-                if (current.getId().equals(id)){
-                    listOfCollections.remove(i);
+
+            if (current.getId().equals(id)){
+                listOfCollections.remove(i);
                     return true;
-                }
-            } 
+            }
+            
         }
         return false;
     }

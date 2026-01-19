@@ -15,7 +15,10 @@
 
     <ScrollPane fitToWidth="true"
                 pannable="true"
-                styleClass="nb-scroll">
+                styleClass="nb-scroll"
+                hbarPolicy="NEVER"
+                vbarPolicy="NEVER"
+                fitToHeight="false">
 
         <content>
             <VBox spacing="12" styleClass="nb-content">
