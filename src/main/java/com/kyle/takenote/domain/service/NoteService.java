@@ -88,6 +88,18 @@ public class NoteService {
         return collectionNotes;
     }
 
+    public ArrayList<Note> getNotesForPage(UUID pageId){
+        ArrayList<Note> pageNotes = new ArrayList<>();
+        for (Note note: listOfNotes){
+            if (note.getPageId() != null) {
+                if (note.getPageId().equals(pageId)){
+                    pageNotes.add(note);
+                }
+            }
+        }
+        return pageNotes;
+    }
+
     public List<Note> getAllNotes() {
         return new ArrayList<>(listOfNotes);
     }

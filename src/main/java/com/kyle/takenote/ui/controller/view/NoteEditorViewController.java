@@ -159,7 +159,12 @@ public class NoteEditorViewController
 
         // Go back to the note board for the active collection
         // (use whatever method you already have)
-        navigator.showNotesForCollection(activeCollectionId);
+        if (activeCollectionId != null) {
+            navigator.showNotesForCollection(activeCollectionId);
+        }
+        else {
+            navigator.showCollections(); //TODO: fix this so it will go back to original page
+        }
     }
 
 

@@ -88,20 +88,25 @@ public class CollectionActionBarController
     }
 
 
-    @FXML
+   @FXML
     private void handleNewNote() {
-
         requireInjected();
 
-        
+        UUID pageId = navigator.getActivePageId();
+        if (pageId == null) {
+            pageId = collectionService.getDefaultPageId();
+        }
 
-        Note created = noteService.createNote(null, activeCollectionId, "", "");
+        UUID targetCollectionId = selectedCollectionId; // folder selected? put note inside it
 
-        collectionService.saveToDisk();
+        Note created = noteService.createNote(pageId, targetCollectionId, "", "");
         noteService.saveToDisk();
 
-        navigator.showNoteEditor(activeCollectionId, created.getId());
+        // Open editor. collectionId can be null now (page note)
+        navigator.showNoteEditor(targetCollectionId, created.getId());
     }
+
+
 
 
  

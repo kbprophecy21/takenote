@@ -43,6 +43,7 @@ public class CollectionCardController implements Navigator.SupportsNavigator, Na
         metaLabel.setText(noteCount + " notes");
     }
 
+
     public void setSelected(boolean selected) {
         if (selected) {
             if (!root.getStyleClass().contains("selected")) root.getStyleClass().add("selected");

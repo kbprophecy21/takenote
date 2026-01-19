@@ -77,7 +77,7 @@ public class NoteCardController
             System.out.println("Navigator is null");
             return;
         }
-        if (collectionId == null || noteId == null) {
+        if (noteId == null) {
             System.out.println("Missing IDs");
             return;
         }

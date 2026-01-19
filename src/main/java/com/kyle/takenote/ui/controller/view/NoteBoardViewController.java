@@ -126,7 +126,7 @@ public class NoteBoardViewController
         cardRoot.setLayoutY(n.getPosY());
 
         UUID id = n.getId();
-        enableDragMove(cardRoot, id);
+        enableNoteDragMove(cardRoot, id);
 
         noteController.setActiveCollectionId(activeCollectionId);
         
@@ -141,7 +141,7 @@ public class NoteBoardViewController
 
 
 
-    private void enableDragMove(Node card, UUID noteId) {
+    private void enableNoteDragMove(Node card, UUID noteId) {
 
         final double[] offset = new double[2];
         final boolean[] moved = new boolean[] { false };

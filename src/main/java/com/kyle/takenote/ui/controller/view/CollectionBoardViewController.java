@@ -5,9 +5,11 @@ import java.io.IOException;
 import java.util.UUID;
 
 import com.kyle.takenote.domain.model.Collection;
+import com.kyle.takenote.domain.model.Note;
 import com.kyle.takenote.domain.service.CollectionService;
 import com.kyle.takenote.domain.service.NoteService;
 import com.kyle.takenote.ui.controller.component.card.CollectionCardController;
+import com.kyle.takenote.ui.controller.component.card.NoteCardController;
 import com.kyle.takenote.ui.navigation.Navigator;
 
 import javafx.fxml.FXML;
@@ -49,14 +51,12 @@ public class CollectionBoardViewController
     //------------Methods---------------//
     @Override
     public void setNavigator(Navigator navigator) {
-        System.out.println("setNavigator called on " + this);
         this.navigator = navigator;
         ready();
     }
 
     @Override
     public void setServices(CollectionService cs, NoteService ns) {
-        System.out.println("setServices called on " + this);
         this.collectionService = cs;
         this.noteService = ns;
         ready();
@@ -64,7 +64,6 @@ public class CollectionBoardViewController
 
     @Override
     public void setActivePageId(UUID id) {
-        System.out.println("setActivePageId called on " + this + " with " + id);
         this.activePageId = id;
         ready();
     }
@@ -75,13 +74,7 @@ public class CollectionBoardViewController
         }
     }
 
-    @FXML
-    public void initialize() {
-        System.out.println("CollectionBoardViewController initialize: " + this);
-    }
-   
     
-
     private void addCollectionCard(Collection c, NoteService ns) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(
@@ -98,7 +91,7 @@ public class CollectionBoardViewController
             cardRoot.setLayoutY(c.getPosY());
 
             UUID id = c.getId();
-            enableDragMove(cardRoot, id);
+            enableCollectionDragMove(cardRoot, id);
             
             collectionBoard.getChildren().add(cardRoot);
 
@@ -107,6 +100,34 @@ public class CollectionBoardViewController
         }
     }
 
+    // --> note function here.
+    private void addNoteCard(Note n) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(
+                "/com/kyle/takenote/fxml/component/cards/NoteCard.fxml"
+            ));
+
+            Parent cardRoot = loader.load();
+            NoteCardController noteController = loader.getController();
+
+            noteController.setNavigator(navigator);
+            noteController.setData(n.getId(), n.getTitle(), n.getBody());
+
+            // IMPORTANT: do NOT setActiveCollectionId for page notes
+            // noteController.setActiveCollectionId(null);
+
+            cardRoot.setLayoutX(n.getPosX());
+            cardRoot.setLayoutY(n.getPosY());
+
+            enableNoteDragMove(cardRoot, n.getId()); // use NOTE saving, not collection saving
+
+            collectionBoard.getChildren().add(cardRoot);
+
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to load NoteCard.fxml", e);
+        }
+    }
+ 
     
     public void setDefaultPageId(UUID id) {this.defaultPageId = id;}
 
@@ -116,21 +137,21 @@ public class CollectionBoardViewController
 
    
 
-    private void enableDragMove(Node card, UUID collectionId) {
+    private void enableCollectionDragMove(Node node, UUID collectionId) {
 
         final double[] offset = new double[2];
         final boolean[] moved = new boolean[] { false };
 
-        card.setOnMousePressed(e -> {
-            // mouse offset inside the card
+        node.setOnMousePressed(e -> {
+            // mouse offset inside the node
             offset[0] = e.getX();
             offset[1] = e.getY();
             moved[0] = false;
-            card.toFront();
+            node.toFront();
             e.consume();
         });
 
-        card.setOnMouseDragged(e -> {
+        node.setOnMouseDragged(e -> {
             moved[0] = true;
 
             // convert mouse point to board coords
@@ -139,19 +160,19 @@ public class CollectionBoardViewController
             double newX = p.getX() - offset[0];
             double newY = p.getY() - offset[1];
 
-            card.setLayoutX(newX);
-            card.setLayoutY(newY);
+            node.setLayoutX(newX);
+            node.setLayoutY(newY);
 
             e.consume();
         });
 
-        card.setOnMouseReleased(e -> {
+        node.setOnMouseReleased(e -> {
             // only save if it was actually dragged (prevents click from saving)
             if (moved[0]) {
                 collectionService.updateCollectionPosition(
                     collectionId,
-                    card.getLayoutX(),
-                    card.getLayoutY()
+                    node.getLayoutX(),
+                    node.getLayoutY()
                 );
                 collectionService.saveToDisk();
             }
@@ -159,40 +180,71 @@ public class CollectionBoardViewController
         });
     }
 
+   private void enableNoteDragMove(Node node, UUID noteId) {
+        final double[] offset = new double[2];
+        final boolean[] moved = new boolean[] { false };
+
+        node.setOnMousePressed(e -> {
+            offset[0] = e.getX();
+            offset[1] = e.getY();
+            moved[0] = false;
+            node.toFront();
+            e.consume();
+        });
+
+        node.setOnMouseDragged(e -> {
+            moved[0] = true;
+            var p = collectionBoard.sceneToLocal(e.getSceneX(), e.getSceneY());
+            node.setLayoutX(p.getX() - offset[0]);
+            node.setLayoutY(p.getY() - offset[1]);
+            e.consume();
+        });
+
+        node.setOnMouseReleased(e -> {
+            if (moved[0]) {
+                noteService.updateNotePosition(noteId, node.getLayoutX(), node.getLayoutY());
+                noteService.saveToDisk();
+            }
+            e.consume();
+        });
+    }
+
+
+
      /**
      * Note: use this for later use in other type features. 
      */
-    private void handleDragReorder(Node card){
+    private void handleDragReorder(Node node){
 
-        card.setOnDragDetected(e -> {
-            draggedCard = card;
+        node.setOnDragDetected(e -> {
+            draggedCard = node;
             lastHoverIndex = -1;
 
-            var db = card.startDragAndDrop(TransferMode.MOVE);
+            var db = node.startDragAndDrop(TransferMode.MOVE);
 
             var content = new ClipboardContent();
-            content.putString("collection-card"); // marker only part kyle;
+            content.putString("collection-node"); // marker only part kyle;
             db.setContent(content);
 
-            var img = card.snapshot(null, null);
+            var img = node.snapshot(null, null);
             db.setDragView(img);
             db.setDragView(img, img.getWidth() / 2, img.getHeight() / 2);
 
-            card.setOpacity(0.4);
-            card.getStyleClass().add("dragging"); // TODO: add .dragging style class in my .css file in collectionboard.css 
+            node.setOpacity(0.4);
+            node.getStyleClass().add("dragging"); // TODO: add .dragging style class in my .css file in collectionboard.css 
 
             e.consume();
         });
 
-        card.setOnDragOver(e -> {
+        node.setOnDragOver(e -> {
             if (draggedCard == null) return;
-            if (draggedCard == card) return;
+            if (draggedCard == node) return;
             if (!e.getDragboard().hasString()) return;
 
             e.acceptTransferModes(TransferMode.MOVE);
 
             // live make room for the other collection cards.
-            int hoverIndex = collectionBoard.getChildren().indexOf(card);
+            int hoverIndex = collectionBoard.getChildren().indexOf(node);
             if (hoverIndex != lastHoverIndex) {
                 collectionBoard.getChildren().remove(draggedCard);
                 collectionBoard.getChildren().add(hoverIndex, draggedCard);
@@ -204,17 +256,17 @@ public class CollectionBoardViewController
             e.consume();
         });
 
-            card.setOnDragDropped(e -> {
+            node.setOnDragDropped(e -> {
             e.setDropCompleted(draggedCard != null);
             e.consume();
         });
 
-        card.setOnDragDone(e -> {
+        node.setOnDragDone(e -> {
             draggedCard = null;
             lastHoverIndex = -1;
 
-            card.setOpacity(1.0);
-            card.getStyleClass().remove("dragging"); // TODO: add .dragging style class in my .css file in collectionboard.css 
+            node.setOpacity(1.0);
+            node.getStyleClass().remove("dragging"); // TODO: add .dragging style class in my .css file in collectionboard.css 
             
             e.consume();
         });
@@ -246,6 +298,12 @@ public class CollectionBoardViewController
 
         for (Collection c : collections) {
             addCollectionCard(c, noteService);
+        }
+
+        for (Note n: noteService.getNotesForPage(pageId)){
+            if (n.getCollectionId() == null) {
+                addNoteCard(n);
+            }
         }
     }
 
