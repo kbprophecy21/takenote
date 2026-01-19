@@ -76,7 +76,7 @@ public class NoteActionBarController
 
 
    @FXML
-    private void handleNewNoteesdf() {
+    private void handleNewNote() {
 
         requireInjected();
 
