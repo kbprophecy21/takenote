@@ -13,9 +13,12 @@
         <URL value="@../../css/views/noteboard.css"/>
     </stylesheets>
 
-    <ScrollPane fitToWidth="true"
+    <ScrollPane fitToWidth="false"
                 pannable="true"
-                styleClass="nb-scroll">
+                styleClass="nb-scroll"
+                hbarPolicy="NEVER"
+                vbarPolicy="NEVER"
+                fitToHeight="false">
 
         <content>
             <VBox spacing="12" styleClass="nb-content">

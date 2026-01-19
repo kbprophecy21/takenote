@@ -39,6 +39,7 @@ public class NoteService {
 
     //-----------------------------Methods---------------------------//
 
+
     public void setDefaultPageId(UUID id) {
         this.defaultPageId = id;
     }
@@ -90,6 +91,16 @@ public class NoteService {
 
     public List<Note> getAllNotes() {
         return new ArrayList<>(listOfNotes);
+    }
+
+    public List<Note> getNotesForPage(UUID pageId) {
+        List<Note> out = new ArrayList<>();
+        if (pageId == null) return out;
+
+        for (Note n: listOfNotes) {
+            if (pageId.equals(n.getPageId())) out.add(n);
+        }
+        return out;
     }
 
     public Note getNoteById(UUID id) {

@@ -9,14 +9,18 @@
            fx:controller="com.kyle.takenote.ui.controller.view.CollectionBoardViewController"
            styleClass="cb-root">
 
+
     <stylesheets>
         <URL value="@../../css/views/collectionboard.css" />
     </stylesheets>
 
     <!-- Everything sits directly on the board -->
-    <ScrollPane fitToWidth="true"
+    <ScrollPane fitToWidth="false"
                 pannable="true"
-                styleClass="cb-scroll">
+                styleClass="cb-scroll"
+                hbarPolicy="NEVER"
+                vbarPolicy="NEVER"
+                fitToHeight="false">
 
         <content>
             <VBox spacing="12" styleClass="cb-content">

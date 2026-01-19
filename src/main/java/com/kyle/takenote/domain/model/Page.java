@@ -1,8 +1,14 @@
 package com.kyle.takenote.domain.model;
 
+//------Java Imports-----------//
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+
+
+/**
+ * Notes: Page model class.
+ */
 public class Page {
     private UUID id;
     private String name;

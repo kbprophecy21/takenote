@@ -15,7 +15,7 @@ import javafx.scene.input.MouseEvent;
  * 
  */
 public class NoteCardController 
-    implements Navigator.SupportsNavigator, Navigator.SupportsActiveCollection {
+    implements Navigator.SupportsNavigator, Navigator.SupportsActiveCollection, Navigator.SupportsActivePage {
     
 
     //----FXML Fields----------//
@@ -26,6 +26,7 @@ public class NoteCardController
     private Navigator navigator;
     private UUID noteId;
     private UUID collectionId;
+    private UUID activePageId;
 
 
     //---------------Methods--------------------//
@@ -37,6 +38,11 @@ public class NoteCardController
     @Override
     public void setActiveCollectionId(UUID id) {
         this.collectionId = id;
+    }
+
+    @Override
+    public void setActivePageId(UUID id) {
+        this.activePageId = id;
     }
 
 

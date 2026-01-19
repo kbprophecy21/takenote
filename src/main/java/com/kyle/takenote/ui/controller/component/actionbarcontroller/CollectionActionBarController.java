@@ -8,6 +8,7 @@ import com.kyle.takenote.domain.model.Collection;
 import com.kyle.takenote.domain.model.Note;
 import com.kyle.takenote.domain.service.CollectionService;
 import com.kyle.takenote.domain.service.NoteService;
+import com.kyle.takenote.domain.service.PageService;
 import com.kyle.takenote.ui.navigation.Navigator;
 
 import javafx.fxml.FXML;
@@ -22,15 +23,19 @@ import javafx.scene.layout.StackPane;
  * 
  */
 public class CollectionActionBarController 
-    implements Navigator.SupportsNavigator, Navigator.SupportsServices, Navigator.SupportsActiveCollection, Navigator.SupportsSelectedCollection{
+    implements Navigator.SupportsNavigator, Navigator.SupportsServices, Navigator.SupportsActiveCollection,
+        Navigator.SupportsSelectedCollection, Navigator.SupportsActivePage, Navigator.SupportsPageService {
     
 
     //---------Fields--------//
     private CollectionService collectionService;
     private NoteService noteService;
+    private PageService pageService;
     private Navigator navigator;
     private UUID activeCollectionId;
     private UUID selectedCollectionId;
+    private UUID activePageId;
+
 
     
 
@@ -53,6 +58,12 @@ public class CollectionActionBarController
     public void setServices(CollectionService cs, NoteService ns) {
         this.collectionService = cs;
         this.noteService = ns;
+
+    }
+
+    @Override
+    public void setPageService(PageService ps) {
+        this.pageService = ps;
     }
 
     @Override
@@ -68,10 +79,15 @@ public class CollectionActionBarController
          deleteCollectionBtn.setDisable(id == null);
     }
 
+    @Override
+    public void setActivePageId(UUID id) {
+        this.activePageId = id;
+    }
+
    
 
     private void requireInjected() {
-        if (navigator == null || collectionService == null || noteService == null) {
+        if (navigator == null || collectionService == null || noteService == null || pageService == null) {
             throw new IllegalStateException("ActionBarController not injected (services/navigator).");
         }
     }
@@ -93,17 +109,18 @@ public class CollectionActionBarController
 
         requireInjected();
 
-        UUID targetCollectionId =
-                (activeCollectionId != null)
-                        ? activeCollectionId
-                        : collectionService.getOrCreateDefaultCollection().getId();
+        System.out.println(activePageId);
+        UUID targetId =
+                (activePageId != null)
+                        ? activePageId
+                        : pageService.getDefaultPageId();
 
-        Note created = noteService.createNote(null, targetCollectionId, "", "");
+        Note created = noteService.createNote(targetId, null, "", "");
 
-        collectionService.saveToDisk();
+        pageService.saveToDisk();
         noteService.saveToDisk();
 
-        navigator.showNoteEditor(targetCollectionId, created.getId());
+        navigator.showNoteEditor(targetId, created.getId());
     }
 
 
@@ -132,15 +149,16 @@ public class CollectionActionBarController
 
 
     @FXML
-    private void handleDeleteCollection() {
+    private void handleDeleteItem() {
         requireInjected();
 
         if (selectedCollectionId == null) return;
 
+        /* 
         // Don’t allow deleting default (if it exists)
         if (selectedCollectionId.equals(collectionService.getDefaultCollectionId())) {
             return;
-        }
+        }*/
 
         // Delete notes that belong to this collection (important!)
         for (var note : new java.util.ArrayList<>(noteService.getNotesForCollection(selectedCollectionId))) {

@@ -103,7 +103,7 @@ public class Navigator {
         loadSideMenu(Routes.SIDE_MENU_VIEW);
     }
 
-    public void showNoteEditor(UUID collectionId, UUID noteId) {
+    public void showNoteEditor(UUID targetId, UUID noteId) {
         Object controller = loadContent(Routes.NOTE_EDITOR_VIEW);
         showControls(Routes.NOTE_EDITOR_CONTROLS);
 
@@ -111,25 +111,24 @@ public class Navigator {
             n.setActiveNote(noteId);
         }
         if (controller instanceof SupportsActiveCollection c) {
-            c.setActiveCollectionId(collectionId);
+            c.setActiveCollectionId(targetId);
         }
     }
 
-    public void showNotesForCollection(UUID collectionId) {
+    public void showNotesForCollection(UUID targetId) {
         Object controller = loadContent(Routes.NOTE_BOARD_VIEW);
         showControls(Routes.NOTE_CONTROLS);
 
-        // If NoteBoard controller supports receiving the collectionId, pass it
+        // If NoteBoard controller supports receiving the targetId, pass it
         if (controller instanceof SupportsActiveCollection c) {
-            c.setActiveCollectionId(collectionId);
+            c.setActiveCollectionId(targetId);
         }
 
         if (controlsController instanceof  SupportsActiveCollection c) {
-            c.setActiveCollectionId(collectionId);
+            c.setActiveCollectionId(targetId);
         }
     }
 
-    
 
     // ------------------- FXML loading helpers ------------------- //
 
@@ -237,7 +236,7 @@ public class Navigator {
     }
 
     public interface SupportsPageService {
-        void setPageService(com.kyle.takenote.domain.service.PageService ps);
+        void setPageService(PageService ps);
     }
 
     public interface SupportsActivePage {

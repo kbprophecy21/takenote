@@ -1,5 +1,6 @@
 package com.kyle.takenote.domain.service;
 
+//------Java Imports--------//
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -8,6 +9,10 @@ import java.util.UUID;
 import com.kyle.takenote.domain.model.Page;
 import com.kyle.takenote.infrastructure.persistence.json.JsonPageRepository;
 
+
+/**
+ * Notes: PageService class is the business logic that controls Page.java.
+ */
 public class PageService {
 
     private final JsonPageRepository repo;
@@ -61,7 +66,7 @@ public class PageService {
         for (Page p : pages) {
             if (DEFAULT_PAGE_ID.equals(p.getId())) return p;
         }
-        Page created = new Page("Default Page");
+        Page created = new Page("Page 1");
         created.setId(DEFAULT_PAGE_ID);
         pages.add(0, created);
         return created;

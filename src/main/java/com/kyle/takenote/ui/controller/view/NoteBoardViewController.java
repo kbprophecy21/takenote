@@ -82,16 +82,15 @@ public class NoteBoardViewController
     };
 
     private void requireInjected() {
-        if (navigator == null || collectionService == null || noteService == null) {
-            throw new IllegalStateException("NoteBoardViewController not injected (services/navigator).");
+        if (navigator == null || collectionService == null || noteService == null || activeCollectionId == null) {
+            throw new IllegalStateException("NoteBoardViewController not injected (services/navigator or activeId's).");
         }
     }
 
 
     private void renderNotesForActiveCollection() {
-        if (noteBoard == null) throw new NullPointerException("\"noteBoard\" cannot be null (FXML injection didn't happen).");
-        if (collectionService == null) throw new NullPointerException("\"collectionService\" cannot be null (Navigator did't inject services).");
-        if (activeCollectionId == null) throw new NullPointerException("\"activeCollectionId\" cannot be null (No collection selected yet).");
+
+        requireInjected();
         
         Collection activeCollection = collectionService.getCollectionById(activeCollectionId);
         if (activeCollection == null) throw new NullPointerException("\"activeCollection\" cannot be null.");
@@ -120,7 +119,7 @@ public class NoteBoardViewController
         cardRoot.setLayoutY(n.getPosY());
 
         UUID id = n.getId();
-        enableDragMove(cardRoot, id);
+        enableNoteDragMove(cardRoot, id);
 
         noteController.setActiveCollectionId(activeCollectionId);
         
@@ -135,7 +134,7 @@ public class NoteBoardViewController
 
 
 
-    private void enableDragMove(Node card, UUID noteId) {
+    private void enableNoteDragMove(Node card, UUID noteId) {
 
         final double[] offset = new double[2];
         final boolean[] moved = new boolean[] { false };
