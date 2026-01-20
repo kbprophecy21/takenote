@@ -21,6 +21,7 @@ public class NoteCardController
     //----FXML Fields----------//
     @FXML private Label titleLabel;
     @FXML private Label bodyLabel;
+    @FXML private Label updatedDateLabel; // TODO: add this to the note card. for the setData();
 
     //-------Fields--------//
     private Navigator navigator;
@@ -44,23 +45,25 @@ public class NoteCardController
      * TODO: update function to pass in Note object, instead of this.
      * TODO: Fix null pointer issue, this has terrible logic flow. Redo the whole funciton!!!
      */
-    public void setData(UUID noteId, String name, String bodyText){
-        if (noteId == null){
-            throw new IllegalArgumentException("\"noteId\"cannot be null");
+    public void setData(UUID noteId, String name, String bodyText) {
+
+        if (noteId == null) {
+            throw new IllegalArgumentException("\"noteId\" cannot be null");
         }
-        if (name == null || name.equals("")){
-            titleLabel.setText("Untitled");
-        }
-        if (bodyText == null){
-            bodyLabel.setText("");
-        }
-        if (bodyText.length() > 80){
-            bodyLabel.setText(bodyText.substring(0, 80) + "...");
-        }
-    
         this.noteId = noteId;
-        titleLabel.setText(name);
+
+        // Title
+        String safeTitle = (name == null || name.isBlank()) ? "Untitled" : name.trim();
+        titleLabel.setText(safeTitle);
+
+        // Body preview
+        String safeBody = (bodyText == null) ? "" : bodyText.trim();
+        if (safeBody.length() > 80) {
+            safeBody = safeBody.substring(0, 80) + "...";
+        }
+        bodyLabel.setText(safeBody);
     }
+
     
 
     //----------------FXML Methods----------------------//

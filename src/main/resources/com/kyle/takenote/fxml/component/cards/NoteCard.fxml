@@ -8,6 +8,8 @@ this Card is clickable allowing it open the Note body editor so the user can tak
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 <?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+
 
 <StackPane xmlns:fx="http://javafx.com/fxml"
            fx:controller="com.kyle.takenote.ui.controller.component.card.NoteCardController"
@@ -21,22 +23,28 @@ this Card is clickable allowing it open the Note body editor so the user can tak
               <URL value="@../../../css/components/cards/notecard.css"/>
        </stylesheets>
 
+       <Region styleClass="note-fold" StackPane.alignment="TOP_RIGHT">
+              <StackPane.margin>
+                     <Insets top="6" right="6" bottom="0" left="0"/>
+              </StackPane.margin>
+       </Region>
 
-    <VBox spacing="6" styleClass="note-card-content">
 
-        <Label fx:id="titleLabel"
-               text="Untitled"
-               styleClass="note-card-title"/>
+       <VBox spacing="6" styleClass="note-card-content">
 
-        <Label fx:id="bodyLabel"
-               text=""
-               wrapText="true"
-               styleClass="note-card-body"/>
+              <Label fx:id="titleLabel"
+                     text="Untitled"
+                     styleClass="note-card-title"/>
 
-        <Label fx:id="updatedDateLabel"
-               text=""
-               styleClass="note-card-date"/>
+              <Label fx:id="bodyLabel"
+                     text=""
+                     wrapText="true"
+                     styleClass="note-card-body"/>
 
-    </VBox>
+              <Label fx:id="updatedDateLabel"
+                     text=""
+                     styleClass="note-card-date"/>
+
+       </VBox>
 </StackPane>
 
