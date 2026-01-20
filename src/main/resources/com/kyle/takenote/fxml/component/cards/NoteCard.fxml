@@ -3,28 +3,21 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 <?import java.net.URL?>
-<?import javafx.scene.image.ImageView?>
 
 <StackPane xmlns:fx="http://javafx.com/fxml"
            fx:controller="com.kyle.takenote.ui.controller.component.card.NoteCardController"
            onMouseClicked="#handleNoteCardClick"
-           prefWidth="220"
-           prefHeight="120"
+           prefWidth="200"
+           prefHeight="200"
            styleClass="note-card">
 
     <stylesheets>
         <URL value="@../../../css/components/cards/notecard.css"/>
     </stylesheets>
 
-    <!-- SVG background -->
-    <ImageView fx:id="bgImage"
-               pickOnBounds="false"
-               mouseTransparent="true"
-               fitWidth="220"
-               fitHeight="140"
-               preserveRatio="false"/>
+    <!-- optional folded corner -->
+    <Region styleClass="note-fold" StackPane.alignment="TOP_RIGHT"/>
 
-    <!-- Foreground content -->
     <VBox spacing="6" styleClass="note-card-content">
         <Label fx:id="titleLabel"
                text="Untitled"

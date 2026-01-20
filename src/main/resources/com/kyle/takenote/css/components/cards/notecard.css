@@ -1,43 +1,61 @@
-/* Card container: behavior only (SVG handles visuals) */
+/* ---------------- Highlight Sticky Note ---------------- */
 .note-card {
-    -fx-background-color: transparent;
-    -fx-padding: 0;              /* let VBox handle padding */
-    -fx-cursor: open-hand;
+    -fx-background-color: linear-gradient(
+        to bottom right,
+        #6ee2d8 0%,
+        #7FD1C9 55%,
+        #5BB8AE 100%
+    );
 
-    /* shadow belongs on the whole card */
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.16), 12, 0.18, 0, 6);
+    -fx-background-radius: 10;
+    -fx-padding: 12;
+
+    -fx-border-color: rgba(0,0,0,0.12);
+    -fx-border-width: 1;
+    -fx-border-radius: 10;
+
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18), 16, 0.25, 0, 8);
+    -fx-cursor: open-hand;
 }
 
 .note-card:hover {
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.22), 16, 0.22, 0, 8);
-    -fx-translate-y: -1;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.28), 22, 0.30, 0, 12);
+    -fx-translate-y: -2;
 }
 
 .note-card.dragging {
     -fx-cursor: closed-hand;
     -fx-translate-y: 0;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.28), 20, 0.25, 0, 10);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.32), 28, 0.35, 0, 14);
 }
 
-/* Text/layout stays */
+/* Content */
 .note-card-content {
     -fx-spacing: 6;
-    -fx-padding: 12; /* put your padding here now */
 }
 
 .note-card-title {
     -fx-font-size: 15px;
     -fx-font-weight: 800;
-    -fx-text-fill: #2A2A2A;
+    -fx-text-fill: #103634; /* darker teal ink */
 }
 
 .note-card-body {
     -fx-font-size: 12px;
-    -fx-text-fill: rgba(30,30,30,0.78);
+    -fx-text-fill: rgba(16,54,52,0.82);
     -fx-line-spacing: 1px;
 }
 
 .note-card-date {
     -fx-font-size: 10px;
-    -fx-text-fill: rgba(40,40,40,0.45);
+    -fx-text-fill: rgba(16,54,52,0.55);
+}
+
+/* Folded corner */
+.note-fold {
+    -fx-pref-width: 14;
+    -fx-pref-height: 14;
+    -fx-background-color: rgba(0,0,0,0.12);
+    -fx-background-radius: 0 10 0 6;
+    -fx-opacity: 0.25;
 }
