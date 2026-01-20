@@ -7,6 +7,7 @@ import com.kyle.takenote.ui.navigation.Navigator;
 import com.kyle.takenote.ui.util.SvgImageLoader;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -94,9 +95,10 @@ public class NoteCardController
          */
         bgImage.setImage(img);
 
-        bgImage.setViewport(new javafx.geometry.Rectangle2D(
-            120, 60, 
-            360, 260));
+        bgImage.setViewport(new Rectangle2D(
+            120, 60,
+            360, 260
+        ));
 
         bgImage.setFitWidth(220);
         bgImage.setFitHeight(140);
