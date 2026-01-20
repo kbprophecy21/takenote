@@ -4,9 +4,11 @@ package com.kyle.takenote.ui.controller.component.card;
 import java.util.UUID;
 
 import com.kyle.takenote.ui.navigation.Navigator;
+import com.kyle.takenote.ui.util.SvgImageLoader;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 
@@ -27,6 +29,8 @@ public class NoteCardController
     private Navigator navigator;
     private UUID noteId;
     private UUID collectionId;
+
+    @FXML private ImageView bgImage;
 
 
     //---------------Methods--------------------//
@@ -72,6 +76,35 @@ public class NoteCardController
      * TODO: Needs to be updated!
      * This will handle the click part to open up the Note editor for the user.
      */
+
+
+    @FXML
+    public void initialize() {
+        var img = SvgImageLoader.loadSvgAsImage(
+                "/com/kyle/takenote/images/svg/bluestickynoteimage.svg", 
+                220, 
+                140
+        );
+
+        //TEMP: might change these later to fix the file image inside another software.
+        /**Note: How to tune it: change the viewport rectangle:
+         * Increase x,y → shifts crop right/down
+         * Increase width,height → zooms out
+         * Decrease width,height → zooms in
+         */
+        bgImage.setImage(img);
+
+        bgImage.setViewport(new javafx.geometry.Rectangle2D(
+            120, 60, 
+            360, 260));
+
+        bgImage.setFitWidth(220);
+        bgImage.setFitHeight(140);
+        bgImage.setPreserveRatio(false);
+
+    }
+
+
     @FXML
     private void handleNoteCardClick(MouseEvent event) {
 

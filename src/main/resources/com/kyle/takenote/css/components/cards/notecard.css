@@ -1,26 +1,11 @@
-/* ---------------- Sticky Note (more square) ---------------- */
+/* Card container: behavior only (SVG handles visuals) */
 .note-card {
-    -fx-background-color: linear-gradient(
-        to bottom right,
-        #FFF9B1 0%,
-        #FFF2A0 55%,
-        #FFE88B 100%
-    );
-
-    /* more square */
-    -fx-background-radius: 6;
-    -fx-border-radius: 6;
-
-    -fx-padding: 12;
-
-    /* subtle paper edge */
-    -fx-border-color: rgba(0,0,0,0.12);
-    -fx-border-width: 1;
-
-    /* less “folder floating”, more “paper on board” */
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.16), 12, 0.18, 0, 6);
-
+    -fx-background-color: transparent;
+    -fx-padding: 0;              /* let VBox handle padding */
     -fx-cursor: open-hand;
+
+    /* shadow belongs on the whole card */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.16), 12, 0.18, 0, 6);
 }
 
 .note-card:hover {
@@ -34,54 +19,25 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.28), 20, 0.25, 0, 10);
 }
 
-
-/* inner content spacing */
+/* Text/layout stays */
 .note-card-content {
     -fx-spacing: 6;
-    -fx-padding: 6 6 4 6;
+    -fx-padding: 12; /* put your padding here now */
 }
 
-/* Title: bold marker-like */
 .note-card-title {
     -fx-font-size: 15px;
     -fx-font-weight: 800;
     -fx-text-fill: #2A2A2A;
 }
 
-/* Body: readable pencil/ink tone */
 .note-card-body {
     -fx-font-size: 12px;
     -fx-text-fill: rgba(30,30,30,0.78);
     -fx-line-spacing: 1px;
 }
 
-/* Optional: subtle "tape" effect if you add a tape node */
-.note-tape {
-    -fx-background-color: rgba(210, 230, 255, 0.45);
-    -fx-border-color: rgba(80, 120, 180, 0.22);
-    -fx-border-width: 1;
-    -fx-background-radius: 6;
-    -fx-border-radius: 6;
-}
-
-/* Optional: date line feels like light graphite */
 .note-card-date {
     -fx-font-size: 10px;
     -fx-text-fill: rgba(40,40,40,0.45);
 }
-
-
-/* small dog-ear corner (not a tab) */
-.note-fold {
-    -fx-pref-width: 14;
-    -fx-pref-height: 14;
-
-    /* make it look like a folded corner */
-    -fx-background-color: rgba(0,0,0,0.10);
-
-    /* IMPORTANT: tiny corner only */
-    -fx-background-radius: 0 6 0 0;
-
-    -fx-opacity: 0.25;
-}
-
